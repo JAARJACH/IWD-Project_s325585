@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Jakes website</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body>
+        <nav class="bg-gray-100 border-b border-gray-300">
+            <div class="container mx-auto px-4 flex items-center gap-4 py-2">
+                <a class="text-xl font-semibold text-gray-800" href="index.html">Jake's News Website</a>
+                <div class="hidden md:block" id="navbarNav">
+                <ul class="flex flex-col md:flex-row gap-2 md:gap-4">
+                    <li>
+                        <a class="text-gray-700 hover:text-blue-600" href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a class="text-gray-700 hover:text-blue-600" href="sport.html">Sport</a>
+                    </li>
+                    <li>
+                        <a class="text-gray-700 hover:text-blue-600" href="education.html">Education</a>
+                    </li>
+                    <li>
+                        <a class="text-gray-700 hover:text-blue-600" href="gaming.html">Gaming</a>
+                    </li>
+                </ul>
+            </div>
+                <button class="md:hidden items-center p-2 rounded text-gray-800 hover:bg-gray-200 ml-auto" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+        </nav>
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-3xl font-bold">Welcome to Jake's website</h1>
+            <p class="mt-4">This is an awesome new website with news from around the world.</p>
+            <table>
+                <tr>
+                    <th>name</th>
+                    <th>age</th>
+                    <th>language</th>
+                </tr>
+                <tr>
+                    <th>fred</th>
+                    <th>66</th>
+                    <th>english</th>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
