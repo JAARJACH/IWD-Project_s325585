@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tailwindcss -i ./css/main.css -o ./dist/styles.css --minify",
-    "watch": "tailwindcss -i ./css/main.css -o ./dist/styles.css --watch"
+    "build": "tailwindcss -i ./In-class/css/main.css -o ./dist/styles.css --minify",
+    "watch": "tailwindcss -i ./In-class/css/main.css -o ./dist/styles.css --watch"
   },
   "repository": {
     "type": "git",
