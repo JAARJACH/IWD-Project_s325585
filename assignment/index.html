@@ -55,77 +55,77 @@
                 </div>
             </div>
         </nav>
-        <div class="grid grid-cols-6 flex w-full h-screen md:w-auto">
+        <div class="grid grid-cols-6 w-full h-screen md:w-auto">
             <form class="hidden md:block flex-none" id="filters" action="">
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="showStatus">Show Status</label>
-                    <select name="showStatus" id="showStatus" class="w-3/4 border border-black">
+                    <select name="showStatus" id="showStatus" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="showType">Show Type</label>
-                    <select name="showType" id="showType" class="w-3/4 border border-black">
+                    <select name="showType" id="showType" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="genre">Genre</label>
-                    <select name="genre" id="genre" class="w-3/4 border border-black">
+                    <select name="genre" id="genre" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="language">Language</label>
-                    <select name="language" id="language" class="w-3/4 border border-black">
+                    <select name="language" id="language" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="country">Country</label>
-                    <select name="country" id="country" class="w-3/4 border border-black">
+                    <select name="country" id="country" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="network">Network</label>
-                    <select name="network" id="network" class="w-3/4 border border-black">
+                    <select name="network" id="network" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="webChannel">Web Channel</label>
-                    <select name="webChannel" id="webChannel" class="w-3/4 border border-black">
+                    <select name="webChannel" id="webChannel" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="runtime">Runtime</label>
-                    <select name="runtime" id="runtime" class="w-3/4 border border-black">
+                    <select name="runtime" id="runtime" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="rating">Rating</label>
-                    <select name="rating" id="rating" class="w-3/4 border border-black">
+                    <select name="rating" id="rating" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
-                    <label for=pPremieredSince">Premiered Since</label>
-                    <select name=pPremieredSince" id=pPremieredSince" class="w-3/4 border border-black">
+                    <label for="premieredSince">Premiered Since</label>
+                    <select name="premieredSince" id="premieredSince" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="premieredUntil">Premiered Until</label>
-                    <select name="premieredUntil" id="premieredUntil" class="w-3/4 border border-black">
+                    <select name="premieredUntil" id="premieredUntil" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
                 <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="sortBy">Sort By</label>
-                    <select name="sortBy" id="sortBy" class="w-3/4 border border-black">
+                    <select name="sortBy" id="sortBy" class="w-1/2 border border-black">
                         
                     </select>
                 </div>
@@ -134,8 +134,9 @@
                 </button>
             </form>
 
-            <div  class="w-screen md:w-auto md:col-span-4 bg-red-500" id="grid sytem">
-                <div id="results" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-lg"></div>
+            <div  class="col-span-6 md:w-auto md:col-span-4 bg-red-500" id="grid-system">
+                <div id="results" class="grid grid-cols-2 md:grid-cols-3 gap-4 m-4 text-lg">
+                </div>
             </div>
             
             <div class="hidden md:block bg-blue-600 col-span-1 flex-none" >
