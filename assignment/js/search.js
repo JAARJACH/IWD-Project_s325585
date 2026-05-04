@@ -63,14 +63,17 @@ const displayShows = (data, searchValue) => {
 
 window.addEventListener("load", () => {
     
-    const savedShows = localStorage.getItem("shows");
-    const savedSearchValue = localStorage.getItem("search value");
+    if (performance.getEntriesByType("navigation")[0].type === "reload"){
+        const savedShows = localStorage.getItem("shows");
+        const savedSearchValue = localStorage.getItem("search value");
 
-    if (savedShows) {
+        if (savedShows) {
 
-        const showData = JSON.parse(savedShows);
-        const searchValueData = JSON.parse(savedSearchValue);
+            const showData = JSON.parse(savedShows);
+            const searchValueData = JSON.parse(savedSearchValue);
 
-        displayShows(showData, searchValueData);
+            displayShows(showData, searchValueData);
+        }
     }
+    
 });
