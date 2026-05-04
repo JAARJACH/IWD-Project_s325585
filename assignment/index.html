@@ -55,89 +55,93 @@
                 </div>
             </div>
         </nav>
-        <div class="grid grid-cols-6 flex w-full h-screen md:w-auto bg-blue-500">
+        <div class="grid grid-cols-6 flex w-full h-screen md:w-auto">
             <form class="hidden md:block flex-none" id="filters" action="">
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="showStatus">Show Status</label>
-                    <select name="showStatus" id="showStatus" class="w-1/2 ">
+                    <select name="showStatus" id="showStatus" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="showType">Show Type</label>
-                    <select name="showType" id="showType" class="w-1/2 ">
+                    <select name="showType" id="showType" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="genre">Genre</label>
-                    <select name="genre" id="genre" class="w-1/2 ">
+                    <select name="genre" id="genre" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="language">Language</label>
-                    <select name="language" id="language" class="w-1/2 ">
+                    <select name="language" id="language" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="country">Country</label>
-                    <select name="country" id="country" class="w-1/2 ">
+                    <select name="country" id="country" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="network">Network</label>
-                    <select name="network" id="network" class="w-1/2 ">
+                    <select name="network" id="network" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="webChannel">Web Channel</label>
-                    <select name="webChannel" id="webChannel" class="w-1/2 ">
+                    <select name="webChannel" id="webChannel" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="runtime">Runtime</label>
-                    <select name="runtime" id="runtime" class="w-1/2 ">
+                    <select name="runtime" id="runtime" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="rating">Rating</label>
-                    <select name="rating" id="rating" class="w-1/2 ">
+                    <select name="rating" id="rating" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for=pPremieredSince">Premiered Since</label>
-                    <select name=pPremieredSince" id=pPremieredSince" class="w-1/2 ">
+                    <select name=pPremieredSince" id=pPremieredSince" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="premieredUntil">Premiered Until</label>
-                    <select name="premieredUntil" id="premieredUntil" class="w-1/2 ">
+                    <select name="premieredUntil" id="premieredUntil" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
-                <div class="bg-blue-500  pl-12 py-4 flex flex-col gap-2">
+                <div class="pl-12 py-4 flex flex-col gap-2">
                     <label for="sortBy">Sort By</label>
-                    <select name="sortBy" id="sortBy" class="w-1/2 ">
+                    <select name="sortBy" id="sortBy" class="w-3/4 border border-black">
                         
                     </select>
                 </div>
+                <button type="submit" class=" bg-blue-500 w-1/2 text-white ml-12 my-4 px-2 py-1 text-sm rounded hover:bg-blue-600">
+                    Filter
+                </button>
             </form>
 
             <div  class="w-screen md:w-auto md:col-span-4 bg-red-500" id="grid sytem">
-                <div></div>
+                <div id="results" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-lg"></div>
             </div>
             
             <div class="hidden md:block bg-blue-600 col-span-1 flex-none" >
 
             </div>
         </div>
+    <script src="./js/search.js"></script>
     </body>
 </html>
