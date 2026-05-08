@@ -1,4 +1,7 @@
-const resultList = document.querySelector('#results');
+const searchResultList = document.querySelector('#search_results');
+const homeResultsList = document.querySelector('#home_results');
+const previousButton = document.querySelector('#previousButton');
+const nextButton = document.querySelector('#nextButton');
 let curretnWebPage = "home";
 let currentPage = 0;
 
@@ -6,7 +9,8 @@ const searchShows = (event) => {
     event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
     const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
-    resultList.innerHTML = '';
+    searchResultList.innerHTML = '';
+    homeResultsList.innerHTML = '';
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -27,7 +31,7 @@ const searchShows = (event) => {
                         Visit Official Site
                     </a>
                 </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
+                searchResultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -43,8 +47,11 @@ const searchShows = (event) => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
+                searchResultList.insertAdjacentHTML('beforeend', ShowElement);
             }  
+            nextButton.style.display = 'none';
+            previousButton.style.display = 'none';
+            curretnWebPage = "search";
         });
     })
     .catch((error) => {
@@ -55,7 +62,8 @@ const searchShows = (event) => {
 const homePageShows = () =>{
     event.preventDefault();
     const url = 'https://api.tvmaze.com/shows?page=' + currentPage;
-    resultList.innerHTML = '';
+    searchResultList.innerHTML = '';
+    homeResultsList.innerHTML = '';
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -76,7 +84,7 @@ const homePageShows = () =>{
                         Visit Official Site
                     </a>
                 </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
+                homeResultsList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -92,8 +100,10 @@ const homePageShows = () =>{
                         Official Site Not Available
                     </p>
                 </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            } 
+                homeResultsList.insertAdjacentHTML('beforeend', ShowElement);
+            }
+            nextButton.style.display = 'block';
+            previousButton.style.display = 'block'; 
         });
     })
     .catch((error) => {
@@ -103,18 +113,23 @@ const homePageShows = () =>{
 
 nextButton.addEventListener('click', () => {
     currentPage++;
-    homePageShows();
-    window.scrollTo(0, 0);
-});
-
-previousButton.addEventListener('click', () => {
-    if (currentPage > 0) {
-        currentPage--;
+    if(curretnWebPage == "home"){
         homePageShows();
         window.scrollTo(0, 0);
     }
 });
 
+previousButton.addEventListener('click', () => {
+    if (currentPage > 0) {
+        currentPage--;
+        if(curretnWebPage == "home"){
+            homePageShows();
+            window.scrollTo(0, 0);
+        }
+    }
+});
+
 window.addEventListener("load", () => {
+    curretnWebPage = "home";
     homePageShows();    
 });
