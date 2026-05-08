@@ -75,5 +75,9 @@ window.addEventListener("load", () => {
             displayShows(showData, searchValueData);
         }
     }
+    else{
+        localStorage.clear();
+    }
+        
     
 });
