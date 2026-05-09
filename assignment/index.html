@@ -33,18 +33,21 @@
                     </div>
                  
                     <ul class="flex justify-center  :flex-row gap-8 bg">
-                        <li>
+                        <button>
                             <a class="text-black hover:text-grey-600" href="index.html">Home</a>
-                        </li>
-                        <li>
-                            <a class="text-black hover:text-grey-600" href="">row </a>
-                        </li>
-                        <li>
-                            <a class="text-black hover:text-grey-600" href="">row </a>
-                        </li>
-                        <li>
-                            <a class="text-black hover:text-grey-600" href="">row </a>
-                        </li>
+                        </button>
+                        <button>
+                            <a class="text-black hover:text-grey-600" id="Top_100_shows">Top 100 shows </a>
+                        </button>
+                        <button>
+                            <a class="text-black hover:text-grey-600" id="Top_100_newest_shows">Top 100 newest shows</a>
+                        </button>
+                        <button>
+                            <a class="text-black hover:text-grey-600" id="Top_100_episodes">Top 100 episodes</a>
+                        </button>
+                        <button>
+                            <a class="text-black hover:text-grey-600" id="Top_100_newest_episodes">Top 100 newest episodes</a>
+                        </button>
                     </ul>
                 
                 </div>
@@ -134,9 +137,22 @@
             </form>
 
             <div  class="col-span-6 md:w-auto md:col-span-4" id="grid-system">
+                <div id="search_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+                </div>
+                
                 <div id="home_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
                 </div>
-                <div id="search_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+
+                <div id="Top100_shows_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+                </div>
+
+                <div id="Top100_newest_shows_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+                </div>
+
+                <div id="Top100_episodes_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+                </div>
+
+                <div id="Top100_newest_episodes_results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
                 </div>
                 
                 <button id="previousButton" class="bg-blue-500 w-[100px] text-white mb-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-left"><-- Previous</button>

@@ -1,16 +1,81 @@
+const Top100Shows = document.querySelector('#Top_100_shows');
+const Top100newestShows = document.querySelector('#Top_100_newest_shows');
+const Top100Episodes = document.querySelector('#Top_100_episodes');
+const Top100NewestEpisodes = document.querySelector('#Top_100_newest_episodes');
+
 const searchResultList = document.querySelector('#search_results');
 const homeResultsList = document.querySelector('#home_results');
+const Top100ShowsResultsList = document.querySelector('#Top_100_shows_results');
+const Top100newestShowsResultsList = document.querySelector('#Top_100_newest_shows_results');
+const Top100EpisodesResultsList = document.querySelector('#Top_100_episodes_results');
+const Top100NewestEpisodesResultsList = document.querySelector('#Top_100_newest_episodes_results');
+
+
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
+
 let curretnWebPage = "home";
 let currentPage = 0;
 
-const searchShows = (event) => {
+Top100Shows.addEventListener('click', () => {
+    event.preventDefault();
+    const url = 'https://api.tvmaze.com/shows?page=' + currentPage;
+    clearResults();
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        data.forEach((show) => {
+            const sortedShows = shows
+                .filter(show => show.weight !== null)
+                .sort((a, b) => b.weight - a.weight)
+                .slice(0, 100);
+            if(sortedShow.officialSite != null){
+                const ShowElement = `
+                <div class="bg-white rounded shadow border-2 p-4 mb-4">
+                    <img 
+                        src="${sortedShow.image?.medium}" 
+                        alt="${sortedShow.name}"
+                        class="w-full rounded mb-4"
+                    >
+                    <h5 class="text-lg font-semibold mb-2 break-words">${sortedShow.name}</h5>
+                    <p class="text-gray-600 mb-3 break-words">${sortedShow.genres}</p>
+                    <a target="_blank" href="${sortedShow.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Visit Official Site
+                    </a>
+                </div>`;
+                Top100ShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+            }
+            else{
+                const ShowElement = `
+                <div class="bg-white rounded shadow border-2 p-4 mb-4">
+                    <img 
+                        src="${sortedShow.image?.medium}" 
+                        alt="${sortedShow.name}"
+                        class="w-full rounded mb-4"
+                    >
+                    <h5 class="text-lg font-semibold mb-2 break-words">${sortedShow.name}</h5>
+                    <p class="text-gray-600 mb-3 break-words">${sortedShow.genres}</p>
+                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
+                        Official Site Not Available
+                    </p>
+                </div>`;
+                Top100ShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+            }
+            nextButton.style.display = 'block';
+            previousButton.style.display = 'block'; 
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
+const searchShows = () => {
     event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
     const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
-    searchResultList.innerHTML = '';
-    homeResultsList.innerHTML = '';
+    clearResults();
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -62,8 +127,7 @@ const searchShows = (event) => {
 const homePageShows = () =>{
     event.preventDefault();
     const url = 'https://api.tvmaze.com/shows?page=' + currentPage;
-    searchResultList.innerHTML = '';
-    homeResultsList.innerHTML = '';
+    clearResults();
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -109,6 +173,11 @@ const homePageShows = () =>{
     .catch((error) => {
         console.log(error);
     });
+}
+
+const clearResults = () => {
+    searchResultList.innerHTML = '';
+    homeResultsList.innerHTML = '';
 }
 
 nextButton.addEventListener('click', () => {
