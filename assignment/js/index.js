@@ -17,7 +17,6 @@ const nextButton = document.querySelector('#nextButton');
 let currentPage = 0;
 
 Top100Shows.addEventListener('click', () => {
-    event.preventDefault();
     const url = 'https://api.tvmaze.com/shows'
     clearResults();
     fetch(url)
@@ -71,7 +70,6 @@ Top100Shows.addEventListener('click', () => {
 });
 
 Top100NewestShows.addEventListener('click', () => {
-    event.preventDefault();
     const url = 'https://api.tvmaze.com/shows'
     clearResults();
     fetch(url)
@@ -125,7 +123,6 @@ Top100NewestShows.addEventListener('click', () => {
 });
 
 Top100Episodes.addEventListener('click', () => {
-    event.preventDefault();
     const url = 'https://api.tvmaze.com/shows?episode'
     clearResults();
     fetch(url)
@@ -179,7 +176,6 @@ Top100Episodes.addEventListener('click', () => {
 });
 
 Top100NewestShows.addEventListener('click', () => {
-    event.preventDefault();
     const url = 'https://api.tvmaze.com/shows'
     clearResults();
     fetch(url)
@@ -235,7 +231,6 @@ Top100NewestShows.addEventListener('click', () => {
 
 
 const searchShows = () => {
-    event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
     const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
     clearResults();
@@ -287,7 +282,6 @@ const searchShows = () => {
 }
 
 const homePageShows = () =>{
-    event.preventDefault();
     const url = 'https://api.tvmaze.com/shows?page=' + currentPage;
     clearResults();
     fetch(url)
