@@ -2,14 +2,7 @@ const Top100Shows = document.querySelector('#Top_100_shows');
 const Top100NewestShows = document.querySelector('#Top_100_newest_shows');
 const Top100Episodes = document.querySelector('#Top_100_episodes');
 const Top100NewestEpisodes = document.querySelector('#Top_100_newest_episodes');
-
-const searchResultList = document.querySelector('#search_results');
-const homeResultsList = document.querySelector('#home_results');
-const Top100ShowsResultsList = document.querySelector('#Top_100_shows_results');
-const Top100newestShowsResultsList = document.querySelector('#Top_100_newest_shows_results');
-const Top100EpisodesResultsList = document.querySelector('#Top_100_episodes_results');
-const Top100NewestEpisodesResultsList = document.querySelector('#Top_100_newest_episodes_results');
-
+const resultList = document.querySelector('#results');
 
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
@@ -42,7 +35,7 @@ Top100Shows.addEventListener('click', () => {
                         Visit Official Site
                     </a>
                 </div>`;
-                Top100ShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -58,7 +51,7 @@ Top100Shows.addEventListener('click', () => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                Top100ShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             nextButton.style.display = 'none';
             previousButton.style.display = 'none'; 
@@ -95,7 +88,7 @@ Top100NewestShows.addEventListener('click', () => {
                         Visit Official Site
                     </a>
                 </div>`;
-                Top100newestShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -111,7 +104,7 @@ Top100NewestShows.addEventListener('click', () => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                Top100newestShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             nextButton.style.display = 'none';
             previousButton.style.display = 'none'; 
@@ -148,7 +141,7 @@ Top100Episodes.addEventListener('click', () => {
                         Visit Official Site
                     </a>
                 </div>`;
-                Top100EpisodesResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -164,7 +157,7 @@ Top100Episodes.addEventListener('click', () => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                Top100EpisodesResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             nextButton.style.display = 'none';
             previousButton.style.display = 'none'; 
@@ -201,7 +194,7 @@ Top100NewestShows.addEventListener('click', () => {
                         Visit Official Site
                     </a>
                 </div>`;
-                Top100newestShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -217,7 +210,7 @@ Top100NewestShows.addEventListener('click', () => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                Top100newestShowsResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             nextButton.style.display = 'none';
             previousButton.style.display = 'none'; 
@@ -228,9 +221,11 @@ Top100NewestShows.addEventListener('click', () => {
     });
 });
 
-const searchShows = () => {
+const searchShows = (event) => {
+    event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
-    if(keyword.strip() == ""){
+    console.log("keyword: "+ keyword.trim());
+    if(keyword.trim() == ""){
         return;
     }
     const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
@@ -255,7 +250,7 @@ const searchShows = () => {
                         Visit Official Site
                     </a>
                 </div>`;
-                searchResultList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -271,7 +266,7 @@ const searchShows = () => {
                         Official Site Not Available
                     </p>
                 </div>`;
-                searchResultList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }  
             nextButton.style.display = 'none';
             previousButton.style.display = 'none';
@@ -305,7 +300,7 @@ const homePageShows = () =>{
                         Visit Official Site
                     </a>
                 </div>`;
-                homeResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             else{
                 const ShowElement = `
@@ -321,7 +316,7 @@ const homePageShows = () =>{
                         Official Site Not Available
                     </p>
                 </div>`;
-                homeResultsList.insertAdjacentHTML('beforeend', ShowElement);
+                resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
             nextButton.style.display = 'block';
             previousButton.style.display = 'block';
@@ -335,12 +330,7 @@ const homePageShows = () =>{
 const clearResults = () => {
     nextButton.style.display = 'none';
     previousButton.style.display = 'none'; 
-    searchResultList.innerHTML = '';
-    homeResultsList.innerHTML = '';
-    Top100ShowsResultsList.innerHTML = '';
-    Top100newestShowsResultsList.innerHTML = '';
-    Top100EpisodesResultsList.innerHTML = '';
-    Top100NewestEpisodesResultsList.innerHTML = '';
+    resultList.innerHTML = '';
 }
 
 nextButton.addEventListener('click', () => {
