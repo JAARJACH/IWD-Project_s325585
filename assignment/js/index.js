@@ -228,10 +228,11 @@ Top100NewestShows.addEventListener('click', () => {
     });
 });
 
-
-
 const searchShows = () => {
     const keyword = document.querySelector('#keywords').value;
+    if(keyword.strip() == ""){
+        return;
+    }
     const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
     clearResults();
     fetch(url)
