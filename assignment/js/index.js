@@ -1,5 +1,5 @@
 // nav buttons
-const actors = document.querySelector('#actors');
+const actorsButton = document.querySelector('#actors');
 const Top100ShowsButton = document.querySelector('#Top_100_shows');
 const Top100NewestShowsButton = document.querySelector('#Top_100_newest_shows');
 const Top100EpisodesButton = document.querySelector('#Top_100_episodes');
@@ -12,7 +12,9 @@ const resultList = document.querySelector('#results');
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
 
-let currentPage = 0;
+let currentShowPage = 0;
+let currentActorPage = 0;
+let currentWepPage = "home";
 
 
 const searchShows = (event) => {
@@ -61,9 +63,7 @@ const searchShows = (event) => {
                     </p>
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }  
-            nextButton.style.display = 'none';
-            previousButton.style.display = 'none';
+            } 
         });
     })
     .catch((error) => {
@@ -71,9 +71,9 @@ const searchShows = (event) => {
     });
 }
 
-
 const homePageShows = () =>{
-    const url = 'https://api.tvmaze.com/shows?page=' + currentPage;
+    const url = 'https://api.tvmaze.com/shows?page=' + currentShowPage;
+    currentWepPage = "show";
     clearResults();
     fetch(url)
     .then((response) => response.json())
@@ -113,16 +113,48 @@ const homePageShows = () =>{
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            nextButton.style.display = 'block';
-            previousButton.style.display = 'block';
         });
     })
     .catch((error) => {
         console.log(error);
     });
+    nextButton.style.display = 'block';
+    previousButton.style.display = 'block';
 }
 
+actorsButton.addEventListener('click', () => {
+    actorsPage();
+});
 
+const actorsPage = () => {
+    const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
+    currentWepPage = "actors";
+    clearResults();
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        data.forEach((Actor) => {
+            const ShowElement = `
+            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+                <img 
+                    src="${Actor.image?.medium}" 
+                    alt="${Actor.name}"
+                    class="w-full rounded mb-4"
+                >
+                <h5 class="text-lg font-semibold mb-2 break-words">${Actor.name}</h5>
+                <p class="text-gray-600 mb-3 break-words">${Actor.country ? Actor.country.name: ''}</p>
+                <p class="text-gray-600 mb-3 break-words">${Actor.birthday ? Actor.birthday: ''}</p>
+            </div>`;
+            resultList.insertAdjacentHTML('beforeend', ShowElement);
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    nextButton.style.display = 'block';
+    previousButton.style.display = 'block';
+}
 
 Top100ShowsButton.addEventListener('click', () => {
     const url = 'https://api.tvmaze.com/shows'
@@ -168,8 +200,6 @@ Top100ShowsButton.addEventListener('click', () => {
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            nextButton.style.display = 'none';
-            previousButton.style.display = 'none'; 
         });
     })
     .catch((error) => {
@@ -221,8 +251,6 @@ Top100NewestShowsButton.addEventListener('click', () => {
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            nextButton.style.display = 'none';
-            previousButton.style.display = 'none'; 
         });
     })
     .catch((error) => {
@@ -274,8 +302,6 @@ Top100EpisodesButton.addEventListener('click', () => {
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            nextButton.style.display = 'none';
-            previousButton.style.display = 'none'; 
         });
     })
     .catch((error) => {
@@ -327,8 +353,6 @@ Top100NewestEpisodesButton.addEventListener('click', () => {
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            nextButton.style.display = 'none';
-            previousButton.style.display = 'none'; 
         });
     })
     .catch((error) => {
@@ -343,15 +367,27 @@ const clearResults = () => {
 }
 
 nextButton.addEventListener('click', () => {
-    currentPage++;
-    homePageShows();
+    if(currentWepPage == "show"){
+        currentShowPage++;
+        homePageShows();
+    }
+    else if(currentWepPage == "actors"){
+        currentActorPage++;
+        actorsPage();
+    }
     window.scrollTo(0, 0);
 });
 
 previousButton.addEventListener('click', () => {
-    if (currentPage > 0) {
-        currentPage--;
-        homePageShows();
+    if (currentShowPage > 0){
+        if(currentWepPage == "show"){
+            currentShowPage--;
+            homePageShows();
+        }
+        else if(currentWepPage == "actors"){
+        currentActorPage++;
+        actorsPage();
+        }
         window.scrollTo(0, 0);
     }
 });
