@@ -143,8 +143,8 @@ const actorsPage = () => {
                     class="w-full rounded mb-4"
                 >
                 <h5 class="text-lg font-semibold mb-2 break-words">${Actor.name}</h5>
-                <p class="text-gray-600 mb-3 break-words">${Actor.country ? Actor.country.name: ''}</p>
-                <p class="text-gray-600 mb-3 break-words">${Actor.birthday ? Actor.birthday: ''}</p>
+                <p class="text-gray-600 mb-3 break-words">From: ${Actor.country ? Actor.country.name: 'Unknown'}</p>
+                <p class="text-gray-600 mb-3 break-words">Date of birth: ${Actor.birthday ? Actor.birthday.split("-").reverse().join("/"): 'Unknown'}</p>
             </div>`;
             resultList.insertAdjacentHTML('beforeend', ShowElement);
         });
