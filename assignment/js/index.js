@@ -17,7 +17,7 @@ let currentActorPage = 0;
 let currentWepPage = "home";
 
 
-const searchShows = (event) => {
+function searchShows(event){
     event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
     console.log("keyword: "+ keyword.trim());
@@ -71,7 +71,7 @@ const searchShows = (event) => {
     });
 }
 
-const homePageShows = () =>{
+function homePageShows(){
     const url = 'https://api.tvmaze.com/shows?page=' + currentShowPage;
     currentWepPage = "show";
     clearResults();
@@ -126,7 +126,7 @@ actorsButton.addEventListener('click', () => {
     actorsPage();
 });
 
-const actorsPage = () => {
+function actorsPage(){
     const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
     currentWepPage = "actors";
     clearResults();
@@ -360,7 +360,7 @@ Top100NewestEpisodesButton.addEventListener('click', () => {
     });
 });
 
-const clearResults = () => {
+function clearResults(){
     nextButton.style.display = 'none';
     previousButton.style.display = 'none'; 
     resultList.innerHTML = '';
