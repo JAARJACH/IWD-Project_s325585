@@ -17,16 +17,16 @@ let currentActorPage = 0;
 let currentWepPage = "home";
 
 
-function searchShows(event){
+function searchShows(){
     event.preventDefault();
     const keyword = document.querySelector('#keywords').value;
     console.log("keyword: "+ keyword.trim());
     if(keyword.trim() == ""){
         return;
     }
-    const url = 'https://api.tvmaze.com/search/shows?q=' + keyword;
+    const showUrl = 'https://api.tvmaze.com/search/shows?q=' + keyword;
     clearResults();
-    fetch(url)
+    fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -40,8 +40,8 @@ function searchShows(event){
                         alt="${show.name}"
                         class="w-full rounded mb-4"
                     >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
+                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
+                    <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
                     <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Visit Official Site
                     </a>
@@ -56,14 +56,38 @@ function searchShows(event){
                         alt="${show.name}"
                         class="w-full rounded mb-4"
                     >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
+                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
+                    <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
                     <p class="inline-block text-gray-600 px-4 py-2 rounded">
                         Official Site Not Available
                     </p>
                 </div>`;
                 resultList.insertAdjacentHTML('beforeend', ShowElement);
             } 
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    const url = 'https://api.tvmaze.com/search/people?q=' + keyword;
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        data.forEach((item) => {
+            const person = item.person;
+            const actorElement = `
+            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+                <img 
+                    src="${person.image?.medium}" 
+                    alt="${person.name}"
+                    class="w-full rounded mb-4"
+                >
+                <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
+                <p class="text-gray-600 mb-3 break-words">From: ${person.country ? person.country.name: 'Unknown'}</p>
+                <p class="text-gray-600 mb-3 break-words">Date of birth: ${person.birthday ? person.birthday.split("-").reverse().join("/"): 'Unknown'}</p>
+            </div>`;
+            resultList.insertAdjacentHTML('beforeend', actorElement);
         });
     })
     .catch((error) => {
@@ -78,7 +102,6 @@ function homePageShows(){
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         data.forEach((item) => {
             const show = item;
             if(show.officialSite != null){
@@ -385,8 +408,8 @@ previousButton.addEventListener('click', () => {
             homePageShows();
         }
         else if(currentWepPage == "actors"){
-        currentActorPage++;
-        actorsPage();
+            currentActorPage--;
+            actorsPage();
         }
         window.scrollTo(0, 0);
     }

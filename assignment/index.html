@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Show Labyrinth</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,30 +22,29 @@
 </head>
     <body id="home-page" >
         <nav  id="nav">
-            <div class="flex justify-center px-4 gap-4">
-                <div class="hidden md:block" id="navbarNav pl-12">
+            <div class="flex justify-center px-4">
+                <div id="navbarNav pl-12">
                     <div class="flex justify-center">
-                        <form id="search-form" class="mt-4 mb-4" onSubmit="searchShows(event)">
+                        <form id="search-form" class="mt-4 mb-4 " onSubmit="searchShows(event)">
                             <input type="text" id="keywords" placeholder="Enter search here…" 
                             class="w-96 border border-gray-300 rounded-full px-2 py-1
                             text-sm text-black focus:outline-none">
                         </form>
                     </div>
-                 
-                    <ul class="flex justify-center  :flex-row gap-8 bg">
-                        <button>
+                    <ul class="flex justify-center gap-8 hidden lg:block">
+                        <button class="mr-12">
                             <a class="text-black hover:text-blue-600" href="index.html">Shows</a>
                         </button>
-                        <button>
+                        <button class="mr-12">
                             <a class="text-black hover:text-blue-600" id="actors">Actors</a>
                         </button>
-                        <button>
+                        <button class="mr-12">
                             <a class="text-black hover:text-blue-600" id="Top_100_shows">Top 100 shows</a>
                         </button>
-                        <button>
+                        <button class="mr-12">
                             <a class="text-black hover:text-blue-600" id="Top_100_newest_shows">Top 100 newest shows</a>
                         </button>
-                        <button>
+                        <button class="mr-12">
                             <a class="text-black hover:text-blue-600" id="Top_100_episodes">Top 100 episodes</a>
                         </button>
                         <button>
@@ -54,34 +53,35 @@
                     </ul>
                 
                 </div>
-                    <button class="md:hidden items-center p-2 rounded text-gray-800 hover:bg-gray-200 ml-auto" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                    <button class="lg:hidden text-right p-2 rounded text-gray-800 hover:bg-gray-200 ml-auto" onclick="this.nextElementSibling.classList.toggle('hidden')">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    <div class="hidden md:hidden">
-                        <button>
+                    <div class="hidden lg:hidden absolute w-46 top-12 right-0 grid grid-cols-1 bg-white rounded-xl 
+                    border border-gray-200 shadow-lg p-4">
+                        <button class="text-right mb-2">
                             <a class="text-black hover:text-blue-600" href="index.html">Shows</a>
                         </button>
-                        <button>
-                            <a class="text-black hover:text-blue-600" id="actors">Actors</a>
+                        <button class="text-right mb-2">
+                            <a class="text-black hover:text-blue-600" id="actors_mobile">Actors</a>
                         </button>
-                        <button>
-                            <a class="text-black hover:text-blue-600" id="Top_100_shows">Top 100 shows</a>
+                        <button class="text-right mb-2">
+                            <a class="text-black hover:text-blue-600" id="Top_100_shows_mobile">Top 100 shows</a>
                         </button>
-                        <button>
-                            <a class="text-black hover:text-blue-600" id="Top_100_newest_shows">Top 100 newest shows</a>
+                        <button class="text-right mb-2">
+                            <a class="text-black hover:text-blue-600" id="Top_100_newest_shows_mobile">Top 100 newest shows</a>
                         </button>
-                        <button>
-                            <a class="text-black hover:text-blue-600" id="Top_100_episodes">Top 100 episodes</a>
+                        <button class="text-right mb-2">
+                            <a class="text-black hover:text-blue-600" id="Top_100_episodes_mobile">Top 100 episodes</a>
                         </button>
-                        <button>
-                            <a class="text-black hover:text-blue-600" id="Top_100_newest_episodes">Top 100 newest episodes</a>
+                        <button class="text-right mb-2">
+                            <a class="text-black hover:text-blue-600" id="Top_100_newest_episodes_mobile">Top 100 newest episodes</a>
                         </button>
                     </div>
                 </div>
             </div>
         </nav>
-        <div class="grid grid-cols-6 w-full h-screen md:w-auto">
-            <form class="hidden md:block flex-none" id="filters" action="">
+        <div class="grid grid-cols-6 w-full h-screen lg:w-auto">
+            <form class="hidden lg:block flex-none" id="filters" action="">
                 <div class="pl-4 py-4 flex flex-col gap-2">
                     <label for="showStatus">Show Status</label>
                     <select name="showStatus" id="showStatus" class="w-full max-w-[200px] h-[30px] border border-black">
@@ -159,12 +159,12 @@
                 </button>
             </form>
 
-            <div  class="col-span-6 md:w-auto md:col-span-4" id="grid-system">
-                <div id="results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-4 text-lg">
+            <div  class="col-span-6 lg:w-auto lg:col-span-4" id="grid-system">
+                <div id="results" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 m-4 text-lg">
                 </div>
                 
-                <button id="previousButton" class="bg-blue-500 w-[100px] text-white mb-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-left"><-- Previous</button>
-                <button id="nextButton" class="bg-blue-500 w-[100px] text-white mb-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-right">Next --></button>
+                <button id="previousButton" class="bg-blue-500 w-[100px] text-white mb-4 ml-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-left"><-- Previous</button>
+                <button id="nextButton" class="bg-blue-500 w-[100px] text-white mb-4 mr-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-right">Next --></button>
             </div>
             
             <div class="hidden md:block col-span-1 flex-none" >
