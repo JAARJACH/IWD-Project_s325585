@@ -81,93 +81,15 @@
             </div>
         </nav>
         <div class="grid grid-cols-6 w-full h-screen lg:w-auto">
-            <form class="hidden lg:block flex-none" id="filters" action="">
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="showStatus">Show Status</label>
-                    <select name="showStatus" id="showStatus" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="showType">Show Type</label>
-                    <select name="showType" id="showType" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="genre">Genre</label>
-                    <select name="genre" id="genre" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="language">Language</label>
-                    <select name="language" id="language" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="country">Country</label>
-                    <select name="country" id="country" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="network">Network</label>
-                    <select name="network" id="network" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="webChannel">Web Channel</label>
-                    <select name="webChannel" id="webChannel" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="runtime">Runtime</label>
-                    <select name="runtime" id="runtime" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="rating">Rating</label>
-                    <select name="rating" id="rating" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="premieredSince">Premiered Since</label>
-                    <select name="premieredSince" id="premieredSince" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="premieredUntil">Premiered Until</label>
-                    <select name="premieredUntil" id="premieredUntil" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <div class="pl-4 py-4 flex flex-col gap-2">
-                    <label for="sortBy">Sort By</label>
-                    <select name="sortBy" id="sortBy" class="w-full max-w-[200px] h-[30px] border border-black">
-                        
-                    </select>
-                </div>
-                <button type="submit" class=" bg-blue-500 w-1/2 text-white ml-12 my-4 px-2 py-1 text-sm rounded hover:bg-blue-600">
-                    Filter
-                </button>
-            </form>
+            <div class="hidden md:block col-span-1 flex-none" ></div>
 
             <div  class="col-span-6 lg:w-auto lg:col-span-4" id="grid-system">
-                <div id="results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-4 text-lg">
-                </div>
+                <div id="results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-4 text-lg"></div>
                 
                 <button id="previousButton" class="bg-blue-500 w-[100px] text-white mb-4 ml-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-left"><-- Previous</button>
                 <button id="nextButton" class="bg-blue-500 w-[100px] text-white mb-4 mr-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-right">Next --></button>
-            </div>
             
-            <div class="hidden md:block col-span-1 flex-none" >
+            </div><div class="hidden md:block col-span-1 flex-none" >
 
             </div>
         </div>
