@@ -53,7 +53,7 @@
                     </ul>
                 
                 </div>
-                    <button class="lg:hidden text-right pt-2 rounded text-gray-800 hover:bg-gray-200 ml-auto" value="Burger menu button" 
+                    <button class="lg:hidden text-right pr-4 pl-4 rounded text-gray-800 hover:bg-gray-200 ml-auto" aria-label="Burger menu button" 
                     onclick="this.nextElementSibling.classList.toggle('hidden')">
                         <i class="fa-solid fa-bars"></i>
                     </button>
@@ -87,8 +87,13 @@
             <div  class="col-span-6 lg:w-auto lg:col-span-4" id="grid-system">
                 <div id="results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-4 text-lg"></div>
                 
-                <button id="previousButton" class="bg-blue-500 w-[100px] text-white mb-4 ml-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-left"><-- Previous</button>
-                <button id="nextButton" class="bg-blue-500 w-[100px] text-white mb-4 mr-4 px-2 py-1 text-sm rounded hover:bg-blue-600 float-right">Next --></button>
+                <button id="previousButton" aria-label="previous page button" class="bg-blue-800 w-[100px] text-white mb-4 ml-4 px-2 py-1 text-sm rounded hover:bg-blue-900 float-left">
+                    <-- Previous
+                </button>
+
+                <button id="nextButton" aria-label="next page button" class="bg-blue-800 w-[100px] text-white mb-4 mr-4 px-2 py-1 text-sm rounded hover:bg-blue-900 float-right">
+                    Next -->
+                </button>
             
             </div><div class="hidden md:block col-span-1 flex-none" >
 
