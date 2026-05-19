@@ -34,38 +34,17 @@ function searchShows(){
         console.log(data);
         data.forEach((item) => {
             const show = item.show;
-            if(show.officialSite != null){
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
-                    <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900">
-                        Visit Official Site
-                    </a>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            } 
+            const ShowElement = `
+            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+                <img 
+                    src="${show.image?.medium}" 
+                    alt="${show.name}"
+                    class="w-full rounded mb-4"
+                >
+                <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
+                <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
+            </div>`;
+            resultList.insertAdjacentHTML('beforeend', ShowElement);
         });
     })
     .catch((error) => {
@@ -106,38 +85,18 @@ function homePageShows(){
     .then((data) => {
         data.forEach((item) => {
             const show = item;
-            if(show.officialSite != null){
-                const ShowElement = `
-                <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words text-left">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words text-left">${show.genres}</p>
-                    <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900">
-                        Visit Official Site
-                    </a>
-                </button>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words text-left">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words text-left">${show.genres}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </button>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
+            const ShowElement = `
+            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
+                <img 
+                    src="${show.image?.medium}" 
+                    alt="${show.name}"
+                    class="w-full rounded mb-4"
+                >
+                <h5 class="text-lg font-semibold mb-2 break-words text-left">${show.name}</h5>
+                <p class="text-gray-600 mb-3 break-words text-left">${show.genres}</p>
+            </button>`;
+            resultList.insertAdjacentHTML('beforeend', ShowElement);
+            
         });
     })
     .catch((error) => {
@@ -194,11 +153,21 @@ function showDetails(showId){
     .then((data) => {
         const show = data;
         const ShowElement = `
-        <img class"col-span-1 "
+        <img class="w-full rounded mb-4 sm:col-span-1 col-span-2"
             src="${show.image?.medium}" 
-            alt="${show.name}"
-            class="w-full rounded mb-4">
+            alt="${show.name}">
         </img>
+        <div class="ml-4 md:col-span-2 col-span-3">
+            <h2>${show.name}</h2>
+            <p>Rating: ${show.rating.average}</p>
+            <p>Genres: ${show.genres}</p>
+            <br>
+            <p>${show.summary}</p>
+            <br>
+            <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 float-right">
+                Visit Official Site
+            </a>
+        </div>
 
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
