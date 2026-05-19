@@ -1,5 +1,6 @@
 // nav buttons
-const actorsButton = document.querySelector('#actors');
+const pcActorsButton = document.querySelector('#actors');
+const mobileActorsButton = document.querySelector('#actors_mobile');
 const Top100ShowsButton = document.querySelector('#Top_100_shows');
 const Top100NewestShowsButton = document.querySelector('#Top_100_newest_shows');
 const Top100EpisodesButton = document.querySelector('#Top_100_episodes');
@@ -145,7 +146,11 @@ function homePageShows(){
     previousButton.style.display = 'block';
 }
 
-actorsButton.addEventListener('click', () => {
+pcActorsButton.addEventListener('click', () => {
+    actorsPage();
+});
+
+mobileActorsButton.addEventListener('click', () => {
     actorsPage();
 });
 
@@ -178,6 +183,8 @@ function actorsPage(){
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';
 }
+
+//#region dont know if to use
 
 Top100ShowsButton.addEventListener('click', () => {
     const url = 'https://api.tvmaze.com/shows'
@@ -382,6 +389,9 @@ Top100NewestEpisodesButton.addEventListener('click', () => {
         console.log(error);
     });
 });
+
+//#endregion
+
 
 function clearResults(){
     nextButton.style.display = 'none';
