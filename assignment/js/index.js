@@ -8,6 +8,7 @@ const Top100NewestEpisodesButton = document.querySelector('#Top_100_newest_episo
 
 // where the results of selected show/actors go
 const resultList = document.querySelector('#results');
+const detailsList = document.querySelector('#details');
 
 // next and previous buttons for switch pages
 const previousButton = document.querySelector('#previousButton');
@@ -107,7 +108,7 @@ function homePageShows(){
             const show = item;
             if(show.officialSite != null){
                 const ShowElement = `
-                <button class="bg-white rounded shadow border-2 p-4 mb-4">
+                <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
                     <img 
                         src="${show.image?.medium}" 
                         alt="${show.name}"
@@ -123,7 +124,7 @@ function homePageShows(){
             }
             else{
                 const ShowElement = `
-                <button class="bg-white rounded shadow border-2 p-4 mb-4">
+                <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
                     <img 
                         src="${show.image?.medium}" 
                         alt="${show.name}"
@@ -182,6 +183,29 @@ function actorsPage(){
     });
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';
+}
+
+function showDetails(showId){
+    clearResults();
+    const url = 'https://api.tvmaze.com/shows/' + showId;
+    clearResults();
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+        const show = data;
+        const ShowElement = `
+        <img class"col-span-1 "
+            src="${show.image?.medium}" 
+            alt="${show.name}"
+            class="w-full rounded mb-4">
+        </img>
+
+        `;
+        detailsList.insertAdjacentHTML('beforeend', ShowElement);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 }
 
 //#region dont know if to use
@@ -397,6 +421,7 @@ function clearResults(){
     nextButton.style.display = 'none';
     previousButton.style.display = 'none'; 
     resultList.innerHTML = '';
+    details.innerHTML = '';
 }
 
 nextButton.addEventListener('click', () => {
