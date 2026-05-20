@@ -86,14 +86,12 @@ function homePageShows(){
         data.forEach((item) => {
             const show = item;
             const ShowElement = `
-            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="showDetails(${show.id})">
+            <button class="bg-white rounded shadow border-2 mb-4 " onclick="showDetails(${show.id})">
                 <img 
                     src="${show.image?.medium}" 
                     alt="${show.name}"
-                    class="w-full rounded mb-4"
+                    class="w-full rounded hover:scale-105 duration-100 easy-in"
                 >
-                <h5 class="text-lg font-semibold mb-2 break-words text-left">${show.name}</h5>
-                <p class="text-gray-600 mb-3 break-words text-left">${show.genres}</p>
             </button>`;
             resultList.insertAdjacentHTML('beforeend', ShowElement);
             
