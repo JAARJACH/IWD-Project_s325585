@@ -9,6 +9,7 @@ const Top100NewestEpisodesButton = document.querySelector('#Top_100_newest_episo
 // where the results of selected show/actors go
 const resultList = document.querySelector('#results');
 const detailsList = document.querySelector('#details');
+const seasonsList = document.querySelector('#seasons');
 
 // next and previous buttons for switch pages
 const previousButton = document.querySelector('#previousButton');
@@ -35,15 +36,13 @@ function searchShows(){
         data.forEach((item) => {
             const show = item.show;
             const ShowElement = `
-            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+            <button class="bg-white rounded shadow border-2 mb-4 " onclick="showDetails(${show.id})">
                 <img 
                     src="${show.image?.medium}" 
                     alt="${show.name}"
-                    class="w-full rounded mb-4"
+                    class="w-full rounded hover:scale-105 duration-100 easy-in"
                 >
-                <h5 class="text-lg font-semibold mb-2 break-words">${show.name ? show.name : 'Name unknown'}</h5>
-                <p class="text-gray-600 mb-3 break-words">${show.genres ? show.genres: 'Genres unknown'}</p>
-            </div>`;
+            </button>`;
             resultList.insertAdjacentHTML('beforeend', ShowElement);
         });
     })
@@ -83,8 +82,7 @@ function homePageShows(){
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
-        data.forEach((item) => {
-            const show = item;
+        data.forEach((show) => {
             const ShowElement = `
             <button class="bg-white rounded shadow border-2 mb-4 " onclick="showDetails(${show.id})">
                 <img 
@@ -144,19 +142,21 @@ function actorsPage(){
 
 function showDetails(showId){
     clearResults();
-    const url = 'https://api.tvmaze.com/shows/' + showId;
+    const showUrl = 'https://api.tvmaze.com/shows/' + showId;
     clearResults();
-    fetch(url)
+    let showName = "";
+    fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
         const show = data;
+        showName = show.name;
         const ShowElement = `
-        <img class="w-full rounded mb-4 sm:col-span-1 col-span-2"
+        <img class="w-full rounded mb-4 md:col-span-1 col-span-2"
             src="${show.image?.medium}" 
             alt="${show.name}">
         </img>
-        <div class="ml-4 md:col-span-2 col-span-3">
-            <h2>${show.name}</h2>
+        <div class="ml-4 md:col-span-2 col-span-1">
+            <h2><strong>${show.name}</strong></h2>
             <p>Rating: ${show.rating.average}</p>
             <p>Genres: ${show.genres}</p>
             <br>
@@ -166,9 +166,32 @@ function showDetails(showId){
                 Visit Official Site
             </a>
         </div>
-
+        <h2 class="float-left col-span-5">Seasons:</h2>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    const seasonUrl = 'https://api.tvmaze.com/shows/' + showId + '/seasons';
+    clearResults();
+    fetch(seasonUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        let seasonAmount = 0;
+        data.forEach((season) => {
+            seasonAmount++;
+            const ShowElement = `
+                <button class="bg-white m-4">
+                    <img 
+                        src="${season.image?.medium}" 
+                        alt="${showName} season ${seasonAmount}"
+                        class="w-full rounded hover:scale-105 duration-100 easy-in"
+                    >
+                </button>`;
+            seasonsList.insertAdjacentHTML('beforeend', ShowElement);
+        });
+
     })
     .catch((error) => {
         console.log(error);
