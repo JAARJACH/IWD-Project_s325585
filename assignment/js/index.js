@@ -37,7 +37,7 @@ function searchShows(){
         data.forEach((item) => {
             const show = item.show;
             const ShowElement = `
-            <button class="bg-white rounded shadow border-2 mb-4 " onclick="showDetails(${show.id})">
+            <button onclick="showDetails(${show.id})">
                 <img 
                     src="${show.image?.medium}" 
                     alt="${show.name}"
@@ -85,7 +85,7 @@ function homePageShows(){
     .then((data) => {
         data.forEach((show) => {
             const ShowElement = `
-            <button class="bg-white rounded shadow border-2 mb-4 " onclick="showDetails(${show.id})">
+            <button onclick="showDetails(${show.id})">
                 <img 
                     src="${show.image?.medium}" 
                     alt="${show.name}"
@@ -186,7 +186,7 @@ function showDetails(showId){
         data.forEach((season) => {
             seasonAmount++;
             const ShowElement = `
-                <button class="bg-white m-4">
+                <button>
                     <img 
                         src="${season.image?.medium}" 
                         alt="${showName} season ${seasonAmount}"
