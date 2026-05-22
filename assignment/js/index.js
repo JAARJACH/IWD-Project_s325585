@@ -8,6 +8,7 @@ const Top100NewestEpisodesButton = document.querySelector('#Top_100_newest_episo
 
 // where the results of selected show/actors go
 const resultList = document.querySelector('#results');
+const showInfo = document.querySelector('#showInfo');
 const detailsList = document.querySelector('#details');
 const seasonsList = document.querySelector('#seasons');
 
@@ -141,6 +142,8 @@ function actorsPage(){
 }
 
 function showDetails(showId){
+    showInfo.style.display = 'block'; 
+    resultList.style.display = "none";
     clearResults();
     const showUrl = 'https://api.tvmaze.com/shows/' + showId;
     clearResults();
@@ -151,11 +154,11 @@ function showDetails(showId){
         const show = data;
         showName = show.name;
         const ShowElement = `
-        <img class="w-full rounded mb-4 md:col-span-1 col-span-1"
+        <img class="w-full rounded mb-4 row-start-1"
             src="${show.image?.medium}" 
             alt="${show.name}">
         </img>
-        <div class="ml-4 md:col-span-2 col-span-1">
+        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>${show.name}</strong></h2>
             <p>Rating: ${show.rating.average}</p>
             <p>Genres: ${show.genres}</p>
@@ -166,6 +169,7 @@ function showDetails(showId){
                 Visit Official Site
             </a>
         </div>
+        
         <h2 class="float-left col-span-5">Seasons:</h2>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
@@ -443,5 +447,7 @@ previousButton.addEventListener('click', () => {
 window.addEventListener("load", () => {
     nextButton.style.display = 'block';
     previousButton.style.display = 'block'; 
+    resultList.style.display = "block";
+    showInfo.style.display = 'none'; 
     homePageShows();    
 });
