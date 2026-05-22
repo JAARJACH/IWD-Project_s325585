@@ -22,12 +22,12 @@
 </head>
     <body id="home-page" >
         <nav  id="nav">
-            <div class="flex justify-center px-4">
-                <div id="navbarNav pl-12">
+            <div class="flex justify-center px-4 ">
+                <div id="navbarNav pl-12 ">
                     <div class="flex justify-center">
-                        <form id="search-form" class="mt-4 mb-4 " onSubmit="searchShows(event)">
+                        <form id="search-form" class="mt-4 mb-4 md:w-96 sm:w-80 w-48" onSubmit="searchShows(event)">
                             <input type="text" id="keywords" placeholder="Enter search here…" 
-                            class="w-96 border border-gray-300 rounded-full px-2 py-1
+                            class="w-full border border-gray-300 rounded-full px-2 py-1
                             text-sm text-black focus:outline-none">
                         </form>
                     </div>
@@ -53,16 +53,16 @@
                     </ul>
                 
                 </div>
-                    <button class="lg:hidden text-right pr-4 pl-4 rounded text-gray-800 hover:bg-gray-200 ml-auto" aria-label="Burger menu button" 
+                    <button class="lg:hidden text-right p-4 rounded text-gray-800 hover:bg-gray-200 absolute top-1 right-1" aria-label="Burger menu button" 
                     onclick="this.nextElementSibling.classList.toggle('hidden')">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    <div class="hidden lg:hidden absolute w-46 top-12 right-0 grid grid-cols-1 bg-white rounded-xl 
+                    <div class="hidden lg:hidden absolute w-46 top-16 right-1 grid grid-cols-1 bg-white rounded-xl 
                     border border-gray-200 shadow-lg p-4">
-                        <button class="text-right mb-2">
+                        <button class="text-right mb-2" ">
                             <a class="text-black hover:text-blue-600" href="index.html">Shows</a>
                         </button>
-                        <button class="text-right mb-2">
+                        <button class="text-right mb-2" onclick="this.parentElement.classList.toggle('hidden')">
                             <a class="text-black hover:text-blue-600" id="actors_mobile">Actors</a>
                         </button>
                         <button class="text-right mb-2">

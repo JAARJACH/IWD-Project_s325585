@@ -151,7 +151,7 @@ function showDetails(showId){
         const show = data;
         showName = show.name;
         const ShowElement = `
-        <img class="w-full rounded mb-4 md:col-span-1 col-span-2"
+        <img class="w-full rounded mb-4 md:col-span-1 col-span-1"
             src="${show.image?.medium}" 
             alt="${show.name}">
         </img>
