@@ -46,6 +46,12 @@ function searchShows(){
             </button>`;
             resultList.insertAdjacentHTML('beforeend', ShowElement);
         });
+        if(data === null || data.length == 0 ){
+            const errorElement = `
+                <p class="text-gray-600 mb-3 break-words">Sorry no TV shows were found</p>
+            </div>`;
+            resultList.insertAdjacentHTML('beforeend', errorElement);
+        }
     })
     .catch((error) => {
         console.log(error);
@@ -70,6 +76,12 @@ function searchShows(){
             </div>`;
             resultList.insertAdjacentHTML('beforeend', actorElement);
         });
+        if(data === null || data.length == 0 ){
+            const errorElement = `
+                <p class="text-gray-600 mb-3 break-words">Sorry no actors were found</p>
+            </div>`;
+            resultList.insertAdjacentHTML('beforeend', errorElement);
+        }
     })
     .catch((error) => {
         console.log(error);
