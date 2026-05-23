@@ -142,8 +142,6 @@ function actorsPage(){
 }
 
 function showDetails(showId){
-    showInfo.style.display = 'block'; 
-    resultList.style.display = "none";
     clearResults();
     const showUrl = 'https://api.tvmaze.com/shows/' + showId;
     clearResults();
@@ -447,7 +445,5 @@ previousButton.addEventListener('click', () => {
 window.addEventListener("load", () => {
     nextButton.style.display = 'block';
     previousButton.style.display = 'block'; 
-    resultList.style.display = "block";
-    showInfo.style.display = 'none'; 
     homePageShows();    
 });
