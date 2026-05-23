@@ -10,7 +10,7 @@ const Top100NewestEpisodesButton = document.querySelector('#Top_100_newest_episo
 const resultList = document.querySelector('#results');
 const showInfo = document.querySelector('#showInfo');
 const detailsList = document.querySelector('#details');
-const seasonsList = document.querySelector('#seasons');
+const extraDetailsList = document.querySelector('#extraDetails');
 
 // next and previous buttons for switch pages
 const previousButton = document.querySelector('#previousButton');
@@ -71,8 +71,6 @@ function searchShows(){
                     class="w-full rounded mb-4"
                 >
                 <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
-                <p class="text-gray-600 mb-3 break-words">From: ${person.country ? person.country.name: 'Unknown'}</p>
-                <p class="text-gray-600 mb-3 break-words">Date of birth: ${person.birthday ? person.birthday.split("-").reverse().join("/"): 'Unknown'}</p>
             </div>`;
             resultList.insertAdjacentHTML('beforeend', actorElement);
         });
@@ -115,14 +113,6 @@ function homePageShows(){
     previousButton.style.display = 'block';
 }
 
-pcActorsButton.addEventListener('click', () => {
-    actorsPage();
-});
-
-mobileActorsButton.addEventListener('click', () => {
-    actorsPage();
-});
-
 function actorsPage(){
     const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
     currentWepPage = "actors";
@@ -131,19 +121,17 @@ function actorsPage(){
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
-        data.forEach((Actor) => {
-            const ShowElement = `
-            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+        data.forEach((person) => {
+            const personElement = `
+            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
                 <img 
-                    src="${Actor.image?.medium}" 
-                    alt="${Actor.name}"
+                    src="${person.image?.medium}" 
+                    alt="${person.name}"
                     class="w-full rounded mb-4"
                 >
-                <h5 class="text-lg font-semibold mb-2 break-words">${Actor.name}</h5>
-                <p class="text-gray-600 mb-3 break-words">From: ${Actor.country ? Actor.country.name: 'Unknown'}</p>
-                <p class="text-gray-600 mb-3 break-words">Date of birth: ${Actor.birthday ? Actor.birthday.split("-").reverse().join("/"): 'Unknown'}</p>
-            </div>`;
-            resultList.insertAdjacentHTML('beforeend', ShowElement);
+                <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
+            </button>`;
+            resultList.insertAdjacentHTML('beforeend', personElement);
         });
     })
     .catch((error) => {
@@ -156,7 +144,6 @@ function actorsPage(){
 function showDetails(showId){
     clearResults();
     const showUrl = 'https://api.tvmaze.com/shows/' + showId;
-    clearResults();
     let showName = "";
     fetch(showUrl)
     .then((response) => response.json())
@@ -188,7 +175,6 @@ function showDetails(showId){
         console.log(error);
     });
     const seasonUrl = 'https://api.tvmaze.com/shows/' + showId + '/seasons';
-    clearResults();
     fetch(seasonUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -203,7 +189,7 @@ function showDetails(showId){
                         class="w-full rounded hover:scale-105 duration-100 easy-in"
                     >
                 </button>`;
-            seasonsList.insertAdjacentHTML('beforeend', ShowElement);
+            extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
         });
 
     })
@@ -211,6 +197,70 @@ function showDetails(showId){
         console.log(error);
     });
 }
+
+function actorDetails(actorId){
+    clearResults();
+    const actorUrl = 'https://api.tvmaze.com/people/' + actorId;
+    fetch(actorUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        const actor = data;
+        const personElement = `
+        <img class="w-full rounded mb-4 row-start-1"
+            src="${actor.image?.medium}" 
+            alt="${actor.name}">
+        </img>
+        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
+            <h2><strong>${actor.name}</strong></h2>
+            <p>from: ${actor.country?.name || "Unknown"}</p>
+            <p>birthday: ${actor.birthday?.split("-").reverse().join("/") || "Unknown"}</p>
+            <br>
+            <br>
+        </div>
+        
+        <h2 class="float-left col-span-5">shows:</h2>
+        `;
+        detailsList.insertAdjacentHTML('beforeend', personElement);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    const showUrl = 'https://api.tvmaze.com/people/' + actorId + '/guestcastcredits?embed=episode';
+    fetch(showUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        currentShow = ""
+        data.forEach((person) => {
+            show = person._embedded.episode._links.show.name;
+            console.log(show)
+            if (currentShow !== show){
+                const ShowElement = `
+                    <div>
+                        <p>${person._embedded.episode._links.show.name}</p>
+                        <img 
+                            src="${person._embedded.episode.image?.medium}" 
+                            alt="${person._embedded.episode._links.show.name}"
+                            class="w-full rounded"
+                        >
+                    </div>`;
+                extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
+            }
+            currentShow = show;
+        });
+
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+pcActorsButton.addEventListener('click', () => {
+    actorsPage();
+});
+
+mobileActorsButton.addEventListener('click', () => {
+    actorsPage();
+});
 
 //#region dont know if to use
 
@@ -426,6 +476,7 @@ function clearResults(){
     previousButton.style.display = 'none'; 
     resultList.innerHTML = '';
     details.innerHTML = '';
+    extraDetailsList.innerHTML = '';
 }
 
 nextButton.addEventListener('click', () => {
