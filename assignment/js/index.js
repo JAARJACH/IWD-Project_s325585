@@ -139,7 +139,7 @@ function actorsPage(){
 
 function showDetails(showId){
     clearResults();
-    const showUrl = 'https://api.tvmaze.com/shows/' + showId;
+    const showUrl = 'https://api.tvmaze.com/shows/' + showId ;
     let showName = "";
     fetch(showUrl)
     .then((response) => response.json())
@@ -164,6 +164,7 @@ function showDetails(showId){
         </div>
         
         <h2 class="float-left col-span-5">Seasons:</h2>
+        <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
     })
@@ -178,7 +179,7 @@ function showDetails(showId){
         data.forEach((season) => {
             seasonAmount++;
             const ShowElement = `
-                <button>
+                <button onclick="seasonDetails(${season.id})">
                     <img 
                         src="${season.image?.medium}" 
                         alt="${showName} season ${seasonAmount}"
@@ -192,6 +193,83 @@ function showDetails(showId){
     .catch((error) => {
         console.log(error);
     });
+}
+
+function seasonDetails(seasonID){
+    clearResults();
+    const showUrl = 'https://api.tvmaze.com/seasons/' + seasonID;
+    fetch(showUrl)
+    .then((response) => response.json())
+    .then((season) => {
+        const seasonElement = `
+        <img class="w-full rounded mb-4 row-start-1"
+            src="${season.image?.medium}" 
+            alt="${season.name}">
+        </img>
+        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
+            <h2><strong>Season ${season.number}</strong></h2>
+            <p>${season.premiereDate.split("-").reverse().join("/")} - ${season.endDate?.split("-").reverse().join("/") || "ongoing"}</p>
+            <p>Episodes: ${season.episodeOrder}</p>
+            <br>
+            <p>${season?.summary}</p>
+            <br>
+        </div>
+        
+        <h2 class="float-left col-span-5">Epsiodes:</h2>
+        <br>
+        `;
+        detailsList.insertAdjacentHTML('beforeend', seasonElement);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    const seasonUrl = 'https://api.tvmaze.com/seasons/' + seasonID + '/episodes?embed=show';
+    fetch(seasonUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        let episodeAmount = 0;
+        data.forEach((episode) => {
+            episodeAmount++;
+            const episodeElement = `
+                <button onclick="episodeDetails(${episode.id})">
+                    <p class="float-left mb-2">${episode.name}</p>
+                    <img 
+                        src="${episode.image?.medium}" 
+                        alt="${episode._embedded.show.name} episode ${episode.name}"
+                        class="w-full rounded hover:scale-105 duration-100 easy-in"
+                    >
+                </button>`;
+            extraDetailsList.insertAdjacentHTML('beforeend', episodeElement);
+        });
+
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+function episodeDetails(episodeID){
+    clearResults();
+    const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID;
+    fetch(showUrl)
+    .then((response) => response.json())
+    .then((episode) => {
+        const seasonElement = `
+        <img class="w-full rounded mb-4 row-start-1"
+            src="${episode.image?.medium}" 
+            alt="${episode.name}">
+        </img>
+        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
+            <h2><strong>${episode.name}</strong></h2>
+            <p>Airdate: ${episode.airdate}</p>
+            <p>Rating: ${episode.rating.average}</p>
+            <br>
+            <p>${episode?.summary}</p>
+            <br>
+        </div>
+        `;
+        detailsList.insertAdjacentHTML('beforeend', seasonElement);
+    })
 }
 
 function actorDetails(actorId){
@@ -215,6 +293,7 @@ function actorDetails(actorId){
         </div>
         
         <h2 class="float-left col-span-5">shows:</h2>
+        <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', personElement);
     })
