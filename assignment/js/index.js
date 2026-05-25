@@ -60,14 +60,14 @@ function searchShows(){
         data.forEach((item) => {
             const person = item.person;
             const actorElement = `
-            <div class="bg-white rounded shadow border-2 p-4 mb-4">
+            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
                 <img 
                     src="${person.image?.medium}" 
                     alt="${person.name}"
                     class="w-full rounded mb-4"
                 >
                 <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
-            </div>`;
+            </button>`;
             resultList.insertAdjacentHTML('beforeend', actorElement);
         });
         if(data === null || data.length == 0 ){
@@ -80,6 +80,7 @@ function searchShows(){
     .catch((error) => {
         console.log(error);
     });
+    document.querySelector('#keywords').value = "";
 }
 
 function homePageShows(){
@@ -197,7 +198,6 @@ function showDetails(showId){
 }
 
 function seasonDetails(seasonID){
-    clearResults();
     const showUrl = 'https://api.tvmaze.com/seasons/' + seasonID;
     fetch(showUrl)
     .then((response) => response.json())
@@ -251,7 +251,6 @@ function seasonDetails(seasonID){
 }
 
 function episodeDetails(episodeID){
-    clearResults();
     const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID + '?embed=show';
     fetch(showUrl)
     .then((response) => response.json())
@@ -310,7 +309,6 @@ function actorDetails(actorId){
         let currentShow = []
         data.forEach((person) => {
             show = person._embedded.show.name;
-            console.log(show)
             if (!currentShow.includes(show)){
                 const ShowElement = `
                     <div onclick="showDetails(${person._embedded.show.id})">
