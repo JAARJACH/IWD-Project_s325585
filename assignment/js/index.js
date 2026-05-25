@@ -24,7 +24,7 @@ let currentWepPage = "home";
 
 
 function searchShows(){
-    Event.preventDefault();
+    event.preventDefault();
     wizardNav.innerHTML = "";
     const keyword = document.querySelector('#keywords').value;
     console.log("keyword: "+ keyword.trim());
