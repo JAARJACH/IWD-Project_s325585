@@ -3,6 +3,7 @@ const pcActorsButton = document.querySelector('#actors');
 const mobileActorsButton = document.querySelector('#actors_mobile');
 
 // where the results of selected show/actors go
+const wizardNav = document.querySelector('#wizard');
 const resultList = document.querySelector('#results');
 const showInfo = document.querySelector('#showInfo');
 const detailsList = document.querySelector('#details');
@@ -11,6 +12,9 @@ const extraDetailsList = document.querySelector('#extraDetails');
 // next and previous buttons for switch pages
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
+
+let currentShowID = ""
+let currentSeasonID = ""
 
 let currentShowPage = 0;
 let currentActorPage = 0;
@@ -84,6 +88,8 @@ function searchShows(){
 }
 
 function homePageShows(){
+    resultList.style.display = "";
+    wizardNav.innerHTML =''; 
     const url = 'https://api.tvmaze.com/shows?page=' + currentShowPage;
     currentWepPage = "show";
     clearResults();
@@ -111,6 +117,7 @@ function homePageShows(){
 }
 
 function actorsPage(){
+    resultList.style.display = "";
     const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
     currentWepPage = "actors";
     clearResults();
@@ -145,6 +152,7 @@ function showDetails(showId){
     fetch(showUrl)
     .then((response) => response.json())
     .then((show) => {
+        currentShowID = show.id;
         showName = show.name;
         const ShowElement = `
         <img class="w-full rounded mb-4 row-start-1"
@@ -195,13 +203,26 @@ function showDetails(showId){
     .catch((error) => {
         console.log(error);
     });
+    resultList.style.display = "none";
+    wizardNav.innerHTML = '';
+    if(wizardNav.children.length <= 0){
+        const homeButtonElement = `
+            <button class="p-2" onclick="homePageShows()">
+                Home
+            </button>
+            <p class="inline-block"> / </P>
+            `;
+        wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
+    }
 }
 
 function seasonDetails(seasonID){
+    clearResults();
     const showUrl = 'https://api.tvmaze.com/seasons/' + seasonID;
     fetch(showUrl)
     .then((response) => response.json())
     .then((season) => {
+        currentSeasonID = season.id;
         const seasonElement = `
         <img class="w-full rounded mb-4 row-start-1"
             src="${season.image?.medium}" 
@@ -248,9 +269,23 @@ function seasonDetails(seasonID){
     .catch((error) => {
         console.log(error);
     });
+    if(wizardNav.children.length <= 2){
+        const showButtonElement = `
+            <button class="p-2" onclick="showDetails(${currentShowID})"">
+                show
+            </button>
+            <p class="inline-block"> / </P>
+            `;
+        wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
+    }
+    if(wizardNav.children.length > 4){
+        wizardNav.lastElementChild.remove();
+    }
+    
 }
 
 function episodeDetails(episodeID){
+    clearResults();
     const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID + '?embed=show';
     fetch(showUrl)
     .then((response) => response.json())
@@ -271,8 +306,18 @@ function episodeDetails(episodeID){
         </div>
         `;
         detailsList.insertAdjacentHTML('beforeend', seasonElement);
-    })
+    }).catch((error) => {
+        console.log(error);
+    });
+    if(wizardNav.children.length <= 4){
+        const seasonButtonElement = `
+            <button class="p-2" onclick="seasonDetails(${currentSeasonID})"">
+                season
+            </button>`;
+        wizardNav.insertAdjacentHTML('beforeend', seasonButtonElement);
+    }
 }
+    
 
 function actorDetails(actorId){
     clearResults();
@@ -328,6 +373,14 @@ function actorDetails(actorId){
     .catch((error) => {
         console.log(error);
     });
+    resultList.style.display = "none";
+    const homeButtonElement = `
+        <button class="p-2" onclick="homePageShows()">
+            Home
+        </button>
+        <p class="inline-block"> > </P>
+        `;
+    wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
 }
 
 pcActorsButton.addEventListener('click', () => {
@@ -374,6 +427,6 @@ previousButton.addEventListener('click', () => {
 
 window.addEventListener("load", () => {
     nextButton.style.display = 'block';
-    previousButton.style.display = 'block'; 
+    previousButton.style.display = 'block';
     homePageShows();    
 });
