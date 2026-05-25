@@ -13,8 +13,10 @@ const extraDetailsList = document.querySelector('#extraDetails');
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
 
-let currentShowID = ""
-let currentSeasonID = ""
+let currentDetailspage = "show";
+let currentShowID = "";
+let currentActorID = "";
+let currentSeasonID = "";
 
 let currentShowPage = 0;
 let currentActorPage = 0;
@@ -22,7 +24,8 @@ let currentWepPage = "home";
 
 
 function searchShows(){
-    event.preventDefault();
+    Event.preventDefault();
+    wizardNav.innerHTML = "";
     const keyword = document.querySelector('#keywords').value;
     console.log("keyword: "+ keyword.trim());
     if(keyword.trim() == ""){
@@ -89,6 +92,7 @@ function searchShows(){
 
 function homePageShows(){
     resultList.style.display = "";
+    currentDetailspage = "show";
     wizardNav.innerHTML =''; 
     const url = 'https://api.tvmaze.com/shows?page=' + currentShowPage;
     currentWepPage = "show";
@@ -118,6 +122,7 @@ function homePageShows(){
 
 function actorsPage(){
     resultList.style.display = "";
+    wizardNav.innerHTML = "";
     const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
     currentWepPage = "actors";
     clearResults();
@@ -213,6 +218,15 @@ function showDetails(showId){
             <p class="inline-block"> / </P>
             `;
         wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
+        if(currentDetailspage == "actor"){
+            const actorButtonElement = `
+                <button class="p-2" onclick="actorDetails(${currentActorID})">
+                    actor
+                </button>
+                <p class="inline-block"> / </P>
+                `;
+            wizardNav.insertAdjacentHTML('beforeend', actorButtonElement);
+        }
     }
 }
 
@@ -269,7 +283,7 @@ function seasonDetails(seasonID){
     .catch((error) => {
         console.log(error);
     });
-    if(wizardNav.children.length <= 2){
+    if(!wizardNav.textContent.includes("show")){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})"">
                 show
@@ -278,8 +292,15 @@ function seasonDetails(seasonID){
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
     }
-    if(wizardNav.children.length > 4){
-        wizardNav.lastElementChild.remove();
+    if(currentDetailspage == "show"){
+        if(wizardNav.children.length > 4){
+            wizardNav.lastElementChild.remove();
+        }
+    }
+    if(currentDetailspage == "actor"){
+        if(wizardNav.children.length > 6){
+            wizardNav.lastElementChild.remove();
+        }
     }
     
 }
@@ -309,23 +330,22 @@ function episodeDetails(episodeID){
     }).catch((error) => {
         console.log(error);
     });
-    if(wizardNav.children.length <= 4){
+    if(!wizardNav.textContent.includes("season")){
         const seasonButtonElement = `
             <button class="p-2" onclick="seasonDetails(${currentSeasonID})"">
                 season
             </button>`;
         wizardNav.insertAdjacentHTML('beforeend', seasonButtonElement);
     }
-}
-    
+}    
 
 function actorDetails(actorId){
     clearResults();
     const actorUrl = 'https://api.tvmaze.com/people/' + actorId;
     fetch(actorUrl)
     .then((response) => response.json())
-    .then((data) => {
-        const actor = data;
+    .then((actor) => {
+        currentActorID = actor.id;
         const personElement = `
         <img class="w-full rounded mb-4 row-start-1"
             src="${actor.image?.medium}" 
@@ -357,11 +377,10 @@ function actorDetails(actorId){
             if (!currentShow.includes(show)){
                 const ShowElement = `
                     <div onclick="showDetails(${person._embedded.show.id})">
-                        <p>${person._embedded.show.name}</p>
                         <img 
                             src="${person._embedded.show.image?.medium}" 
                             alt="${person._embedded.show.name}"
-                            class="w-full rounded"
+                            class="w-full rounded hover:scale-105 duration-100 easy-in"
                         >
                     </div>`;
                 extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
@@ -374,11 +393,13 @@ function actorDetails(actorId){
         console.log(error);
     });
     resultList.style.display = "none";
+    wizardNav.innerHTML = "";
+    currentDetailspage = "actor";
     const homeButtonElement = `
         <button class="p-2" onclick="homePageShows()">
             Home
         </button>
-        <p class="inline-block"> > </P>
+        <p class="inline-block"> / </P>
         `;
     wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
 }
