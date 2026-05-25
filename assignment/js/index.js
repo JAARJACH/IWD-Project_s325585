@@ -205,7 +205,7 @@ function seasonDetails(seasonID){
         const seasonElement = `
         <img class="w-full rounded mb-4 row-start-1"
             src="${season.image?.medium}" 
-            alt="${season.name}">
+            alt="Season ${season.number}">
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>Season ${season.number}</strong></h2>
