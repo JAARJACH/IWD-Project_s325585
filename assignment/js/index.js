@@ -303,21 +303,21 @@ function actorDetails(actorId){
     .catch((error) => {
         console.log(error);
     });
-    const showUrl = 'https://api.tvmaze.com/people/' + actorId + '/guestcastcredits?embed=episode';
+    const showUrl = 'https://api.tvmaze.com/people/' + actorId + '/castcredits?embed=show';
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
         let currentShow = []
         data.forEach((person) => {
-            show = person._embedded.episode._links.show.name;
+            show = person._embedded.show.name;
             console.log(show)
             if (!currentShow.includes(show)){
                 const ShowElement = `
-                    <div>
-                        <p>${person._embedded.episode._links.show.name}</p>
+                    <div onclick="showDetails(${person._embedded.show.id})">
+                        <p>${person._embedded.show.name}</p>
                         <img 
-                            src="${person._embedded.episode.image?.medium}" 
-                            alt="${person._embedded.episode._links.show.name}"
+                            src="${person._embedded.show.image?.medium}" 
+                            alt="${person._embedded.show.name}"
                             class="w-full rounded"
                         >
                     </div>`;
