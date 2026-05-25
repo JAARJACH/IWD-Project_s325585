@@ -1,10 +1,6 @@
 // nav buttons
 const pcActorsButton = document.querySelector('#actors');
 const mobileActorsButton = document.querySelector('#actors_mobile');
-const Top100ShowsButton = document.querySelector('#Top_100_shows');
-const Top100NewestShowsButton = document.querySelector('#Top_100_newest_shows');
-const Top100EpisodesButton = document.querySelector('#Top_100_episodes');
-const Top100NewestEpisodesButton = document.querySelector('#Top_100_newest_episodes');
 
 // where the results of selected show/actors go
 const resultList = document.querySelector('#results');
@@ -229,11 +225,11 @@ function actorDetails(actorId){
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
-        currentShow = ""
+        let currentShow = []
         data.forEach((person) => {
             show = person._embedded.episode._links.show.name;
             console.log(show)
-            if (currentShow !== show){
+            if (!currentShow.includes(show)){
                 const ShowElement = `
                     <div>
                         <p>${person._embedded.episode._links.show.name}</p>
@@ -245,7 +241,7 @@ function actorDetails(actorId){
                     </div>`;
                 extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            currentShow = show;
+            currentShow.push(show);
         });
 
     })
@@ -261,215 +257,6 @@ pcActorsButton.addEventListener('click', () => {
 mobileActorsButton.addEventListener('click', () => {
     actorsPage();
 });
-
-//#region dont know if to use
-
-Top100ShowsButton.addEventListener('click', () => {
-    const url = 'https://api.tvmaze.com/shows'
-    clearResults();
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        const sortedShows = data
-                .filter(show => show.weight != null)
-                .sort((a, b) => b.weight - a.weight)
-                .slice(0, 100);
-            console.log(sortedShows);
-            sortedShows.forEach((show) => {
-            if(show.officialSite != null){
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Visit Official Site
-                    </a>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-});
-
-Top100NewestShowsButton.addEventListener('click', () => {
-    const url = 'https://api.tvmaze.com/shows'
-    clearResults();
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        const sortedShows = data
-                .filter(show => show.premiered)
-                .sort((a, b) => new Date(b.premiered) - new Date(a.premiered))
-                .slice(0, 100);
-            console.log(sortedShows);
-            sortedShows.forEach((show) => {
-            if(show.officialSite != null){
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Visit Official Site
-                    </a>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-});
-
-Top100EpisodesButton.addEventListener('click', () => {
-    const url = 'https://api.tvmaze.com/shows?episode'
-    clearResults();
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        const sortedEpisodes = data
-                .filter(episode => episode.weight != null)
-                .sort((a, b) => b.weight - a.weight)
-                .slice(0, 100);
-            console.log(sortedEpisodes);
-            sortedEpisodes.forEach((episode) => {
-            if(episode.officialSite != null){
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${episode.image?.medium}" 
-                        alt="${episode.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${episode.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${episode.genres}</p>
-                    <a target="_blank" href="${episode.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Visit Official Site
-                    </a>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${episode.image?.medium}" 
-                        alt="${episode.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${episode.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${episode.genres}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-});
-
-Top100NewestEpisodesButton.addEventListener('click', () => {
-    const url = 'https://api.tvmaze.com/shows'
-    clearResults();
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        const sortedShows = data
-                .filter(show => show.premiered)
-                .sort((a, b) => new Date(b.premiered) - new Date(a.premiered))
-                .slice(0, 100);
-            console.log(sortedShows);
-            sortedShows.forEach((show) => {
-            if(show.officialSite != null){
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Visit Official Site
-                    </a>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-            else{
-                const ShowElement = `
-                <div class="bg-white rounded shadow border-2 p-4 mb-4">
-                    <img 
-                        src="${show.image?.medium}" 
-                        alt="${show.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${show.name}</h5>
-                    <p class="text-gray-600 mb-3 break-words">${show.genres}</p>
-                    <p class="inline-block text-gray-600 px-4 py-2 rounded">
-                        Official Site Not Available
-                    </p>
-                </div>`;
-                resultList.insertAdjacentHTML('beforeend', ShowElement);
-            }
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-});
-
-//#endregion
-
 
 function clearResults(){
     nextButton.style.display = 'none';
