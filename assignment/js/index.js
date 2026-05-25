@@ -143,8 +143,7 @@ function showDetails(showId){
     let showName = "";
     fetch(showUrl)
     .then((response) => response.json())
-    .then((data) => {
-        const show = data;
+    .then((show) => {
         showName = show.name;
         const ShowElement = `
         <img class="w-full rounded mb-4 row-start-1"
@@ -153,10 +152,12 @@ function showDetails(showId){
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>${show.name}</strong></h2>
-            <p>Rating: ${show.rating.average}</p>
-            <p>Genres: ${show.genres}</p>
+            <p>Rating: ${show.rating?.average || "Unknown"}</p>
+            <p>Genres: ${show?.genres || "Unknown"}</p>
+            <p>Network: ${show.network?.name || "Unknown"}</p>
+            <p>${show.premiered.split("-").reverse().join("/")} - ${show.ended?.split("-").reverse().join("/") || "ongoing"}</p>
             <br>
-            <p>${show.summary}</p>
+            <p>${show?.summary || ""}</p>
             <br>
             <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 float-right">
                 Visit Official Site
@@ -209,9 +210,10 @@ function seasonDetails(seasonID){
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>Season ${season.number}</strong></h2>
             <p>${season.premiereDate.split("-").reverse().join("/")} - ${season.endDate?.split("-").reverse().join("/") || "ongoing"}</p>
-            <p>Episodes: ${season.episodeOrder}</p>
+            <p>Episodes: ${season?.episodeOrder || "Unknown"}</p>
+            <p>Network: ${season.network?.name || "Unknown"}</p>
             <br>
-            <p>${season?.summary}</p>
+            <p>${season?.summary || ""}</p>
             <br>
         </div>
         
@@ -223,7 +225,7 @@ function seasonDetails(seasonID){
     .catch((error) => {
         console.log(error);
     });
-    const seasonUrl = 'https://api.tvmaze.com/seasons/' + seasonID + '/episodes?embed=show';
+    const seasonUrl = 'https://api.tvmaze.com/seasons/' + seasonID + '/episodes';
     fetch(seasonUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -235,7 +237,7 @@ function seasonDetails(seasonID){
                     <p class="float-left mb-2">${episode.name}</p>
                     <img 
                         src="${episode.image?.medium}" 
-                        alt="${episode._embedded.show.name} episode ${episode.name}"
+                        alt="${episode.name}"
                         class="w-full rounded hover:scale-105 duration-100 easy-in"
                     >
                 </button>`;
@@ -250,7 +252,7 @@ function seasonDetails(seasonID){
 
 function episodeDetails(episodeID){
     clearResults();
-    const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID;
+    const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID + '?embed=show';
     fetch(showUrl)
     .then((response) => response.json())
     .then((episode) => {
@@ -261,10 +263,11 @@ function episodeDetails(episodeID){
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>${episode.name}</strong></h2>
-            <p>Airdate: ${episode.airdate}</p>
-            <p>Rating: ${episode.rating.average}</p>
+            <p>Airdate: ${episode?.airdate || "Unknown"}</p>
+            <p>Rating: ${episode.rating?.average || "Unknown"}</p>
+            <p>Genres: ${episode._embedded.show?.genres || "Unknown"}</p>
             <br>
-            <p>${episode?.summary}</p>
+            <p>${episode?.summary || ""}</p>
             <br>
         </div>
         `;
