@@ -132,7 +132,7 @@ function actorsPage(){
         console.log(data);
         data.forEach((person) => {
             const personElement = `
-            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
+            <button class="bg-white rounded shadow border-2 p-4 mb-4 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${person.id})">
                 <img 
                     src="${person.image?.medium}" 
                     alt="${person.name}"
@@ -214,18 +214,22 @@ function showDetails(showId){
     fetch(actorsUrl)
     .then((response) => response.json())
     .then((data) => {
+        const actorList = [];
         data.forEach((people) => {
-            const actor = people.person;
-            const actorElement = `
-                <button class="bg-white rounded shadow border-2 " onclick="actorDetails(${actor.id})">
-                    <img 
-                        src="${actor.image?.medium}" 
-                        alt="${actor.name}"
-                        class="w-full rounded mb-4"
-                    >
-                    <h5 class="text-lg font-semibold mb-2 break-words">${actor.name}</h5>
-                </button>`;
-            extraDetailsList.insertAdjacentHTML('beforeend', actorElement);
+            actor = people.person;
+            if (!actorList.includes(actor.name)){
+                const actorElement = `
+                    <button class="bg-white rounded shadow border-2 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${actor.id})">
+                        <img 
+                            src="${actor.image?.medium}" 
+                            alt="${actor.name}"
+                            class="w-full rounded mb-4"
+                        >
+                        <h5 class="text-lg font-semibold mb-2 break-words">${actor.name}</h5>
+                    </button>`;
+                extraDetailsList.insertAdjacentHTML('beforeend', actorElement);
+            }
+            actorList.push(actor.name);
         });
 
     })
@@ -380,11 +384,9 @@ function actorDetails(actorId){
             <h2><strong>${actor.name}</strong></h2>
             <p>from: ${actor.country?.name || "Unknown"}</p>
             <p>birthday: ${actor.birthday?.split("-").reverse().join("/") || "Unknown"}</p>
-            <br>
-            <br>
         </div>
         
-        <h2 class="float-left col-span-5">shows:</h2>
+        <h2 class="float-left col-span-5 mb-2">shows:</h2>
         <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', personElement);
@@ -396,21 +398,21 @@ function actorDetails(actorId){
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
-        let currentShow = []
+        let showsList = []
         data.forEach((person) => {
             show = person._embedded.show.name;
-            if (!currentShow.includes(show)){
+            if (!showsList.includes(show)){
                 const ShowElement = `
-                    <div onclick="showDetails(${person._embedded.show.id})">
+                    <buttons onclick="showDetails(${person._embedded.show.id})">
                         <img 
                             src="${person._embedded.show.image?.medium}" 
                             alt="${person._embedded.show.name}"
                             class="w-full rounded hover:scale-105 duration-100 easy-in"
                         >
-                    </div>`;
+                    </buttons>`;
                 extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
             }
-            currentShow.push(show);
+            showsList.push(show);
         });
 
     })
