@@ -178,7 +178,7 @@ function showDetails(showId){
             </a>
         </div>
         
-        <h2 class="float-left col-span-5">Seasons:</h2>
+        <h2 class="float-left col-span-5 mb-2">Seasons:</h2>
         <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
