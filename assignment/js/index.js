@@ -42,7 +42,7 @@ function searchShows(){
             const ShowElement = `
             <button onclick="showDetails(${show.id})">
                 <img 
-                    src="${show.image?.medium}" 
+                    src="${show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + show.name}" 
                     alt="${show.name}"
                     class="w-full rounded hover:scale-105 duration-100 easy-in"
                 >
@@ -57,7 +57,7 @@ function searchShows(){
         }
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     const url = 'https://api.tvmaze.com/search/people?q=' + keyword;
     fetch(url)
@@ -69,7 +69,7 @@ function searchShows(){
             const actorElement = `
             <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
                 <img 
-                    src="${person.image?.medium}" 
+                    src="${person.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text='+ person.name }" 
                     alt="${person.name}"
                     class="w-full rounded mb-4"
                 >
@@ -85,7 +85,7 @@ function searchShows(){
         }
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     document.querySelector('#keywords').value = "";
 }
@@ -104,7 +104,7 @@ function homePageShows(){
             const ShowElement = `
             <button onclick="showDetails(${show.id})">
                 <img 
-                    src="${show.image?.medium}" 
+                    src="${show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + show.name}" 
                     alt="${show.name}"
                     class="w-full rounded hover:scale-105 duration-100 easy-in"
                 >
@@ -114,7 +114,7 @@ function homePageShows(){
         });
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';
@@ -135,7 +135,7 @@ function actorsPage(){
             const personElement = `
             <button class="bg-white rounded shadow border-2 p-4 mb-4 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${person.id})">
                 <img 
-                    src="${person.image?.medium}" 
+                    src="${person.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + person.name}"
                     alt="${person.name}"
                     class="w-full rounded mb-4"
                 >
@@ -145,7 +145,7 @@ function actorsPage(){
         });
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';
@@ -162,7 +162,7 @@ function showDetails(showId){
         showName = show.name;
         const ShowElement = `
         <img class="w-full rounded mb-4 row-start-1"
-            src="${show.image?.medium}" 
+            src="${show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + show.name}" 
             alt="${show.name}">
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
@@ -185,7 +185,7 @@ function showDetails(showId){
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     const seasonUrl = 'https://api.tvmaze.com/shows/' + showId + '/seasons';
     fetch(seasonUrl)
@@ -197,7 +197,7 @@ function showDetails(showId){
             const seasonElement = `
                 <button onclick="seasonDetails(${season.id})">
                     <img 
-                        src="${season.image?.medium}" 
+                        src="${season.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + showName + ' Season ' + seasonAmount}" 
                         alt="${showName} season ${seasonAmount}"
                         class="w-full rounded hover:scale-105 duration-100 easy-in"
                     >
@@ -218,7 +218,7 @@ function showDetails(showId){
                     const actorElement = `
                         <button class="bg-white rounded shadow border-2 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${actor.id})">
                             <img 
-                                src="${actor.image?.medium}" 
+                                src="${actor.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + actor.name}" 
                                 alt="${actor.name}"
                                 class="w-full rounded mb-4"
                             >
@@ -231,11 +231,11 @@ function showDetails(showId){
 
         })
         .catch((error) => {
-            console.log(error);
+            return;
         });
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
 
     resultList.style.display = "none";
@@ -272,7 +272,7 @@ function seasonDetails(seasonID){
         currentSeasonID = season.id;
         const seasonElement = `
         <img class="w-full rounded mb-4 row-start-1"
-            src="${season.image?.medium}" 
+            src="${season.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + 'Season ' + sesason.name}" 
             alt="Season ${season.number}">
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
@@ -291,7 +291,7 @@ function seasonDetails(seasonID){
         detailsList.insertAdjacentHTML('beforeend', seasonElement);
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     const seasonUrl = 'https://api.tvmaze.com/seasons/' + seasonID + '/episodes';
     fetch(seasonUrl)
@@ -304,7 +304,7 @@ function seasonDetails(seasonID){
                 <button onclick="episodeDetails(${episode.id})">
                     <p class="float-left mb-2">${episode.name}</p>
                     <img 
-                        src="${episode.image?.medium}" 
+                        src="${episode.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + episode.name}" 
                         alt="${episode.name}"
                         class="w-full rounded hover:scale-105 duration-100 easy-in"
                     >
@@ -314,7 +314,7 @@ function seasonDetails(seasonID){
 
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     if(!wizardNav.textContent.includes("show")){
         const showButtonElement = `
@@ -346,7 +346,7 @@ function episodeDetails(episodeID){
     .then((episode) => {
         const seasonElement = `
         <img class="w-full rounded mb-4 row-start-1"
-            src="${episode.image?.medium}" 
+            src="${episode.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + episode.name}" 
             alt="${episode.name}">
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
@@ -361,7 +361,7 @@ function episodeDetails(episodeID){
         `;
         detailsList.insertAdjacentHTML('beforeend', seasonElement);
     }).catch((error) => {
-        console.log(error);
+        return;
     });
     if(!wizardNav.textContent.includes("season")){
         const seasonButtonElement = `
@@ -381,7 +381,7 @@ function actorDetails(actorId){
         currentActorID = actor.id;
         const personElement = `
         <img class="w-full rounded mb-4 row-start-1"
-            src="${actor.image?.medium}" 
+            src="${actor.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + actor.name}" 
             alt="${actor.name}">
         </img>
         <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
@@ -396,7 +396,7 @@ function actorDetails(actorId){
         detailsList.insertAdjacentHTML('beforeend', personElement);
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     const showUrl = 'https://api.tvmaze.com/people/' + actorId + '/castcredits?embed=show';
     fetch(showUrl)
@@ -409,7 +409,7 @@ function actorDetails(actorId){
                 const ShowElement = `
                     <buttons onclick="showDetails(${person._embedded.show.id})">
                         <img 
-                            src="${person._embedded.show.image?.medium}" 
+                            src="${person._embedded.show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + person._embedded.show.name}" 
                             alt="${person._embedded.show.name}"
                             class="w-full rounded hover:scale-105 duration-100 easy-in"
                         >
@@ -421,7 +421,7 @@ function actorDetails(actorId){
 
     })
     .catch((error) => {
-        console.log(error);
+        return;
     });
     resultList.style.display = "none";
     wizardNav.innerHTML = "";
