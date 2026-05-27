@@ -122,6 +122,7 @@ function homePageShows(){
 
 function actorsPage(){
     resultList.style.display = "";
+    currentDetailspage = "actor";
     wizardNav.innerHTML = "";
     const url = 'https://api.tvmaze.com/people?page=' + currentActorPage;
     currentWepPage = "actors";
@@ -205,33 +206,33 @@ function showDetails(showId){
         });
         const paragraphElement = `<h2 class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mb-2">Actors:</h2>`;
         extraDetailsList.insertAdjacentHTML('beforeend', paragraphElement);
+        
+        const actorsUrl = 'https://api.tvmaze.com/shows/' + showId + '/cast';
+        fetch(actorsUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            const actorList = [];
+            data.forEach((people) => {
+                actor = people.person;
+                if (!actorList.includes(actor.name)){
+                    const actorElement = `
+                        <button class="bg-white rounded shadow border-2 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${actor.id})">
+                            <img 
+                                src="${actor.image?.medium}" 
+                                alt="${actor.name}"
+                                class="w-full rounded mb-4"
+                            >
+                            <h5 class="text-lg font-semibold mb-2 break-words">${actor.name}</h5>
+                        </button>`;
+                    extraDetailsList.insertAdjacentHTML('beforeend', actorElement);
+                }
+                actorList.push(actor.name);
+            });
 
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-    const actorsUrl = 'https://api.tvmaze.com/shows/' + showId + '/cast';
-    fetch(actorsUrl)
-    .then((response) => response.json())
-    .then((data) => {
-        const actorList = [];
-        data.forEach((people) => {
-            actor = people.person;
-            if (!actorList.includes(actor.name)){
-                const actorElement = `
-                    <button class="bg-white rounded shadow border-2 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${actor.id})">
-                        <img 
-                            src="${actor.image?.medium}" 
-                            alt="${actor.name}"
-                            class="w-full rounded mb-4"
-                        >
-                        <h5 class="text-lg font-semibold mb-2 break-words">${actor.name}</h5>
-                    </button>`;
-                extraDetailsList.insertAdjacentHTML('beforeend', actorElement);
-            }
-            actorList.push(actor.name);
+        })
+        .catch((error) => {
+            console.log(error);
         });
-
     })
     .catch((error) => {
         console.log(error);
@@ -255,7 +256,10 @@ function showDetails(showId){
                 <p class="inline-block"> / </P>
                 `;
             wizardNav.insertAdjacentHTML('beforeend', actorButtonElement);
+            
+            currentDetailspage = "show";
         }
+        
     }
 }
 
@@ -421,7 +425,6 @@ function actorDetails(actorId){
     });
     resultList.style.display = "none";
     wizardNav.innerHTML = "";
-    currentDetailspage = "actor";
     const homeButtonElement = `
         <button class="p-2" onclick="homePageShows()">
             Home
@@ -429,6 +432,17 @@ function actorDetails(actorId){
         <p class="inline-block"> / </P>
         `;
     wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
+    if(currentDetailspage == "show"){
+        const showButtonElement = `
+            <button class="p-2" onclick="showDetails(${currentShowID})">
+                show
+            </button>
+            <p class="inline-block"> / </P>
+            `;
+        wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
+        
+        currentDetailspage = "actor";
+    }
 }
 
 pcActorsButton.addEventListener('click', () => {
