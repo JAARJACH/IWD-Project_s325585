@@ -178,7 +178,7 @@ function showDetails(showId){
             </a>
         </div>
         
-        <h2 class="float-left col-span-5 mb-2">Seasons:</h2>
+        <h2 class="float-left col-span-2 md:col-span-3 mb-2">Seasons:</h2>
         <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
@@ -193,7 +193,7 @@ function showDetails(showId){
         let seasonAmount = 0;
         data.forEach((season) => {
             seasonAmount++;
-            const ShowElement = `
+            const seasonElement = `
                 <button onclick="seasonDetails(${season.id})">
                     <img 
                         src="${season.image?.medium}" 
@@ -201,13 +201,38 @@ function showDetails(showId){
                         class="w-full rounded hover:scale-105 duration-100 easy-in"
                     >
                 </button>`;
-            extraDetailsList.insertAdjacentHTML('beforeend', ShowElement);
+            extraDetailsList.insertAdjacentHTML('beforeend', seasonElement);
+        });
+        const paragraphElement = `<h2 class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mb-2">Actors:</h2>`;
+        extraDetailsList.insertAdjacentHTML('beforeend', paragraphElement);
+
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+    const actorsUrl = 'https://api.tvmaze.com/shows/' + showId + '/cast';
+    fetch(actorsUrl)
+    .then((response) => response.json())
+    .then((data) => {
+        data.forEach((people) => {
+            const actor = people.person;
+            const actorElement = `
+                <button class="bg-white rounded shadow border-2 " onclick="actorDetails(${actor.id})">
+                    <img 
+                        src="${actor.image?.medium}" 
+                        alt="${actor.name}"
+                        class="w-full rounded mb-4"
+                    >
+                    <h5 class="text-lg font-semibold mb-2 break-words">${actor.name}</h5>
+                </button>`;
+            extraDetailsList.insertAdjacentHTML('beforeend', actorElement);
         });
 
     })
     .catch((error) => {
         console.log(error);
     });
+
     resultList.style.display = "none";
     wizardNav.innerHTML = '';
     if(wizardNav.children.length <= 0){
