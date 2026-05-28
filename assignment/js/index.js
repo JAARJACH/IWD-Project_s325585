@@ -209,9 +209,6 @@ function showDetails(showId){
             <br>
             <p>${show?.summary || ""}</p>
             <br>
-            <a target="_blank" href="${show.officialSite || ''}" class="inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 float-right">
-                Visit Official Site
-            </a>
         </div>
         
         <h2 class="float-left col-span-2 md:col-span-3 mb-2">Seasons:</h2>
