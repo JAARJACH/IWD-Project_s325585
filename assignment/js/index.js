@@ -298,7 +298,6 @@ function showDetails(showId){
                 `;
             wizardNav.insertAdjacentHTML('beforeend', actorButtonElement);
             
-            currentDetailspage = "show";
         }
         
     }
