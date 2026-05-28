@@ -282,9 +282,8 @@ function showDetails(showId){
     if(wizardNav.children.length <= 0){
         const homeButtonElement = `
             <button class="p-2" onclick="homePageShows()">
-                Home
+                Home /
             </button>
-            <p class="inline-block"> / </P>
             `;
         // creats the button for actors in the wizard for if the user want to
         // go back and looka the person they were looking at
@@ -292,9 +291,8 @@ function showDetails(showId){
         if(currentDetailspage == "actor"){
             const actorButtonElement = `
                 <button class="p-2" onclick="actorDetails(${currentActorID})">
-                    actor
+                    actor /
                 </button>
-                <p class="inline-block"> / </P>
                 `;
             wizardNav.insertAdjacentHTML('beforeend', actorButtonElement);
             
@@ -363,9 +361,8 @@ function seasonDetails(seasonID){
     if(!wizardNav.textContent.includes("show")){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})"">
-                show
+                show /
             </button>
-            <p class="inline-block"> / </P>
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
     }
@@ -480,18 +477,16 @@ function actorDetails(actorId){
     // creates the home button for the wizard
     const homeButtonElement = `
         <button class="p-2" onclick="homePageShows()">
-            Home
+            Home /
         </button>
-        <p class="inline-block"> / </P>
         `;
     wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
     // allows users to go to the show they were just on if they came from one to a person
     if(currentDetailspage == "show"){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})">
-                show
+                show /
             </button>
-            <p class="inline-block"> / </P>
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
         
