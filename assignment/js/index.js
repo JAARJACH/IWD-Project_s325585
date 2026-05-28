@@ -194,11 +194,11 @@ function showDetails(showId){
         currentShowID = show.id;
         showName = show.name;
         const ShowElement = `
-        <img class="w-full rounded mb-4 col-span-1"
+        <img class="w-full rounded mb-4 row-start-1"
             src="${show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + show.name}" 
             alt="${show.name}">
         </img>
-        <div class="ml-4 col-span-2 ">
+        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
             <h2><strong>${show.name}</strong></h2>
             <p>Rating: ${show.rating?.average || "Unknown"}</p>
             <p>Genres: ${show?.genres || "Unknown"}</p>
@@ -212,7 +212,8 @@ function showDetails(showId){
             </a>
         </div>
         
-        <h2 class="col-span-1 md:col-span-3 mb-2">Seasons:</h2>
+        <h2 class="float-left col-span-2 md:col-span-3 mb-2">Seasons:</h2>
+        <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
     })
@@ -281,8 +282,9 @@ function showDetails(showId){
     if(wizardNav.children.length <= 0){
         const homeButtonElement = `
             <button class="p-2" onclick="homePageShows()">
-                Home /
+                Home
             </button>
+            <p class="inline-block"> / </P>
             `;
         // creats the button for actors in the wizard for if the user want to
         // go back and looka the person they were looking at
@@ -290,8 +292,9 @@ function showDetails(showId){
         if(currentDetailspage == "actor"){
             const actorButtonElement = `
                 <button class="p-2" onclick="actorDetails(${currentActorID})">
-                    actor /
+                    actor
                 </button>
+                <p class="inline-block"> / </P>
                 `;
             wizardNav.insertAdjacentHTML('beforeend', actorButtonElement);
             
@@ -326,7 +329,8 @@ function seasonDetails(seasonID){
             <br>
         </div>
         
-        <h2 class="float-left col-span-2 md:col-span-3 mb-2">Epsiodes:</h2>
+        <h2 class="float-left col-span-5">Epsiodes:</h2>
+        <br>
         `;
         detailsList.insertAdjacentHTML('beforeend', seasonElement);
     })
@@ -359,8 +363,9 @@ function seasonDetails(seasonID){
     if(!wizardNav.textContent.includes("show")){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})"">
-                show /
+                show
             </button>
+            <p class="inline-block"> / </P>
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
     }
@@ -475,16 +480,18 @@ function actorDetails(actorId){
     // creates the home button for the wizard
     const homeButtonElement = `
         <button class="p-2" onclick="homePageShows()">
-            Home /
+            Home
         </button>
+        <p class="inline-block"> / </P>
         `;
     wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
     // allows users to go to the show they were just on if they came from one to a person
     if(currentDetailspage == "show"){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})">
-                show /
+                show
             </button>
+            <p class="inline-block"> / </P>
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
         
