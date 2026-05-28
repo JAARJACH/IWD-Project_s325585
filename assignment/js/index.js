@@ -300,6 +300,7 @@ function showDetails(showId){
         }
         
     }
+    window.scrollTo(0, 0);
 }
 
 function seasonDetails(seasonID){
@@ -379,6 +380,7 @@ function seasonDetails(seasonID){
             wizardNav.lastElementChild.remove();
         }
     }
+    window.scrollTo(0, 0);
     
 }
 
@@ -416,6 +418,7 @@ function episodeDetails(episodeID){
             </button>`;
         wizardNav.insertAdjacentHTML('beforeend', seasonButtonElement);
     }
+    window.scrollTo(0, 0);
 }    
 
 function actorDetails(actorId){
@@ -495,6 +498,7 @@ function actorDetails(actorId){
         
         currentDetailspage = "actor";
     }
+    window.scrollTo(0, 0);
 }
 
 // the button used for desktop users to change the results to the actors pages
