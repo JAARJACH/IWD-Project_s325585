@@ -13,31 +13,46 @@ const extraDetailsList = document.querySelector('#extraDetails');
 const previousButton = document.querySelector('#previousButton');
 const nextButton = document.querySelector('#nextButton');
 
+// these are used to store all the ID numbers to be used inside the wizard buttons
 let currentDetailspage = "show";
 let currentShowID = "";
 let currentActorID = "";
 let currentSeasonID = "";
 
+// used for the page navigation between the show and people page
 let currentShowPage = 0;
 let currentActorPage = 0;
 let currentWepPage = "home";
 
 
 function searchShows(){
+    /*  used to search through shows and people and display them based 
+        on if they are a show which just shows an image of the tv show 
+        and for the people they get an image of them and their name 
+        displayed underneith the image
+    */
     event.preventDefault();
     wizardNav.innerHTML = "";
+    // takes the input inside the search bar to be used for the URL
     const keyword = document.querySelector('#keywords').value;
-    console.log("keyword: "+ keyword.trim());
+    // if the search is empty the function ends here to not wait resorces
     if(keyword.trim() == ""){
         return;
     }
+
+    // the URL for the data to be fetched
     const showUrl = 'https://api.tvmaze.com/search/shows?q=' + keyword;
+    // cleans the webpage of any tv shows or people  
     clearResults();
+    /* fetches the data that is needed to find tv shows and people
+       that is simular to the searched keyword so the data can be manipulated
+       and displayed properly
+    */
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         data.forEach((item) => {
+            // for each object found it creats a button that will lead to the shows details
             const show = item.show;
             const ShowElement = `
             <button onclick="showDetails(${show.id})">
@@ -47,8 +62,10 @@ function searchShows(){
                     class="w-full rounded hover:scale-105 duration-100 easy-in"
                 >
             </button>`;
+            // used to insert all the tv show buttons 
             resultList.insertAdjacentHTML('beforeend', ShowElement);
         });
+        // used to show an human friendly error that there are no shows with the keyword
         if(data === null || data.length == 0 ){
             const errorElement = `
                 <p class="text-gray-600 mb-3 break-words">Sorry no TV shows were found</p>
@@ -56,14 +73,16 @@ function searchShows(){
             resultList.insertAdjacentHTML('beforeend', errorElement);
         }
     })
+    // if any error occurs the program is terminated and stop the error from happening 
     .catch((error) => {
         return;
     });
+    
+    // does the same exact thing just for the people(cast/crew members)
     const url = 'https://api.tvmaze.com/search/people?q=' + keyword;
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         data.forEach((item) => {
             const person = item.person;
             const actorElement = `
@@ -87,11 +106,16 @@ function searchShows(){
     .catch((error) => {
         return;
     });
+    // makes the search bar empty for the next use of it
     document.querySelector('#keywords').value = "";
 }
 
 function homePageShows(){
+    // displays all the shows in pages of roughly 1000 shows a page
+
+    // allows the results list to be displayed for the show buttons to be inserted
     resultList.style.display = "";
+    // makes the wizard appear and 
     currentDetailspage = "show";
     wizardNav.innerHTML =''; 
     const url = 'https://api.tvmaze.com/shows?page=' + currentShowPage;
@@ -101,6 +125,9 @@ function homePageShows(){
     .then((response) => response.json())
     .then((data) => {
         data.forEach((show) => {
+            /* creates a button with a image of the tv show if there is no image to 
+               show a dummy image is created with the shows name to make it look better 
+            */
             const ShowElement = `
             <button onclick="showDetails(${show.id})">
                 <img 
@@ -116,11 +143,13 @@ function homePageShows(){
     .catch((error) => {
         return;
     });
+    // makes the buttons that control the pages appear
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';
 }
 
 function actorsPage(){
+    // displays all the people in pages of roughly 1000 people per page
     resultList.style.display = "";
     currentDetailspage = "actor";
     wizardNav.innerHTML = "";
@@ -130,7 +159,6 @@ function actorsPage(){
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
         data.forEach((person) => {
             const personElement = `
             <button class="bg-white rounded shadow border-2 p-4 mb-4 w-full rounded hover:scale-105 duration-100 easy-in" onclick="actorDetails(${person.id})">
@@ -152,8 +180,13 @@ function actorsPage(){
 }
 
 function showDetails(showId){
+    /* displays the show all of its important details with 
+       its seasons and cast members that are in the show
+    */
+
     clearResults();
     const showUrl = 'https://api.tvmaze.com/shows/' + showId ;
+    // gets the show name to use it in the other fetches of data
     let showName = "";
     fetch(showUrl)
     .then((response) => response.json())
@@ -207,10 +240,13 @@ function showDetails(showId){
         const paragraphElement = `<h2 class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mb-2">Actors:</h2>`;
         extraDetailsList.insertAdjacentHTML('beforeend', paragraphElement);
         
+        // the fetch is done inside another one to make sure 
+        // that all the saesons come first and then the actors
         const actorsUrl = 'https://api.tvmaze.com/shows/' + showId + '/cast';
         fetch(actorsUrl)
         .then((response) => response.json())
         .then((data) => {
+            // makes sure that there are no duplicates of cast members displayed
             const actorList = [];
             data.forEach((people) => {
                 actor = people.person;
@@ -240,6 +276,9 @@ function showDetails(showId){
 
     resultList.style.display = "none";
     wizardNav.innerHTML = '';
+    // creates the buttons for the wizard fo easy navigation for the user
+
+    // creates the button to go back to the home page for the wizard
     if(wizardNav.children.length <= 0){
         const homeButtonElement = `
             <button class="p-2" onclick="homePageShows()">
@@ -247,6 +286,8 @@ function showDetails(showId){
             </button>
             <p class="inline-block"> / </P>
             `;
+        // creats the button for actors in the wizard for if the user want to
+        // go back and looka the person they were looking at
         wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
         if(currentDetailspage == "actor"){
             const actorButtonElement = `
@@ -264,6 +305,9 @@ function showDetails(showId){
 }
 
 function seasonDetails(seasonID){
+    /* displays a specific season with all of its important details
+       it also includes all of its epsidoes in that season
+    */
     clearResults();
     const showUrl = 'https://api.tvmaze.com/seasons/' + seasonID;
     fetch(showUrl)
@@ -293,13 +337,12 @@ function seasonDetails(seasonID){
     .catch((error) => {
         return;
     });
+    // displays the episodes from the season 
     const seasonUrl = 'https://api.tvmaze.com/seasons/' + seasonID + '/episodes';
     fetch(seasonUrl)
     .then((response) => response.json())
     .then((data) => {
-        let episodeAmount = 0;
         data.forEach((episode) => {
-            episodeAmount++;
             const episodeElement = `
                 <button onclick="episodeDetails(${episode.id})">
                     <p class="float-left mb-2">${episode.name}</p>
@@ -316,6 +359,7 @@ function seasonDetails(seasonID){
     .catch((error) => {
         return;
     });
+    // makes sure not to create another show button for the wizard
     if(!wizardNav.textContent.includes("show")){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})"">
@@ -325,6 +369,8 @@ function seasonDetails(seasonID){
             `;
         wizardNav.insertAdjacentHTML('beforeend', showButtonElement);
     }
+    // depending on the current details page it removes 
+    // buttons and arrows after clicking back on one 
     if(currentDetailspage == "show"){
         if(wizardNav.children.length > 4){
             wizardNav.lastElementChild.remove();
@@ -339,6 +385,7 @@ function seasonDetails(seasonID){
 }
 
 function episodeDetails(episodeID){
+    // only displays the contents of the episode and nothing else
     clearResults();
     const showUrl = 'https://api.tvmaze.com/episodes/' + episodeID + '?embed=show';
     fetch(showUrl)
@@ -363,6 +410,7 @@ function episodeDetails(episodeID){
     }).catch((error) => {
         return;
     });
+    // if there is no season button in the wizard it is created
     if(!wizardNav.textContent.includes("season")){
         const seasonButtonElement = `
             <button class="p-2" onclick="seasonDetails(${currentSeasonID})"">
@@ -373,6 +421,8 @@ function episodeDetails(episodeID){
 }    
 
 function actorDetails(actorId){
+    // shows the user all of the details on the person
+    // and displays all the tv shows that they have been in 
     clearResults();
     const actorUrl = 'https://api.tvmaze.com/people/' + actorId;
     fetch(actorUrl)
@@ -398,10 +448,12 @@ function actorDetails(actorId){
     .catch((error) => {
         return;
     });
+    // gets all shows that the person has been in
     const showUrl = 'https://api.tvmaze.com/people/' + actorId + '/castcredits?embed=show';
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
+        // creats this list to make sure no duplicates are made
         let showsList = []
         data.forEach((person) => {
             show = person._embedded.show.name;
@@ -425,6 +477,7 @@ function actorDetails(actorId){
     });
     resultList.style.display = "none";
     wizardNav.innerHTML = "";
+    // creates the home button for the wizard
     const homeButtonElement = `
         <button class="p-2" onclick="homePageShows()">
             Home
@@ -432,6 +485,7 @@ function actorDetails(actorId){
         <p class="inline-block"> / </P>
         `;
     wizardNav.insertAdjacentHTML('beforeend', homeButtonElement);
+    // allows users to go to the show they were just on if they came from one to a person
     if(currentDetailspage == "show"){
         const showButtonElement = `
             <button class="p-2" onclick="showDetails(${currentShowID})">
@@ -445,14 +499,18 @@ function actorDetails(actorId){
     }
 }
 
+// the button used for desktop users to change the results to the actors pages
 pcActorsButton.addEventListener('click', () => {
     actorsPage();
 });
 
+// the button used for mobile users to change the results to the actors pages
 mobileActorsButton.addEventListener('click', () => {
     actorsPage();
 });
 
+// clears all reults lists so that in other function infomation can 
+// be inserted into the results lists without mixing reults together
 function clearResults(){
     nextButton.style.display = 'none';
     previousButton.style.display = 'none'; 
@@ -461,6 +519,7 @@ function clearResults(){
     extraDetailsList.innerHTML = '';
 }
 
+// used to go forward a page for either the tv shows or the people
 nextButton.addEventListener('click', () => {
     if(currentWepPage == "show"){
         currentShowPage++;
@@ -473,6 +532,7 @@ nextButton.addEventListener('click', () => {
     window.scrollTo(0, 0);
 });
 
+// used to go back a page for either the tv shows or the people
 previousButton.addEventListener('click', () => {
     if (currentShowPage > 0){
         if(currentWepPage == "show"){
@@ -487,6 +547,7 @@ previousButton.addEventListener('click', () => {
     }
 });
 
+// used for when a user loads the website, it loads all the shows 
 window.addEventListener("load", () => {
     nextButton.style.display = 'block';
     previousButton.style.display = 'block';

@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- meta tags for SEO purposes -->
     <meta charset="UTF-8">
+    <meta name="description" content="Show Labyrinth is a website that allows users to go and look through hundreds of TV shows and actors that they find intresting 
+    and to find infomation on them like ratings and what shows actors have been in.">
+    <meta name="keywords" content="TV, Actor, Show">
+    <meta name="author" content="Jake Charnley">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show Labyrinth</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/980b282943.js" crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js)  used for google analytics-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EB161MPYYF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -17,16 +22,18 @@
     </script>
 </head>
     <body id="home-page" >
-        <nav  id="nav">
+        <nav  id="nav"> <!-- used for users to navigate to buttons -->
             <div class="flex justify-center px-4">
                 <div id="navbarNav pl-12 flex">
                     <div class="flex justify-center">
+                        <!-- used for users to search for TV shows and people -->
                         <form id="search-form" class="mt-4 mb-4 md:w-96 sm:w-80 w-48" onSubmit="searchShows(event)">
                             <input type="text" id="keywords" placeholder="Enter search here…" 
                             class="w-full border border-gray-300 rounded-full px-2 py-1
                             text-sm text-black focus:outline-none">
                         </form>
                     </div>
+                    <!-- used for users to go to either the TV show or people page -->
                     <ul class="flex justify-center hidden lg:block">
                         <button class="w-1/3 ml-16">
                             <a class="text-black hover:text-blue-600" href="index.html">Shows</a>
@@ -36,6 +43,7 @@
                         </button>
                     </ul>
                 
+                <!-- used for mobile users -->
                 </div>
                     <button class="lg:hidden text-right p-4 rounded text-gray-800 hover:bg-gray-200 absolute top-1 right-1" aria-label="Burger menu button" 
                     onclick="this.nextElementSibling.classList.toggle('hidden')">
@@ -53,6 +61,7 @@
                 </div>
             </div>
         </nav>
+        <!-- devides the pages so that the results are in the middle  -->
         <div class="grid grid-cols-6 w-full h-screen lg:w-auto">
             <div class="hidden lg:block col-span-1 flex-none" ></div>
 
@@ -63,7 +72,8 @@
                     <div id="details" class="grid grid-cols-2 md:grid-cols-3"></div>
                     <div id="extraDetails" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
                 </div>
-                
+
+                <!-- used for changing the current page of TV shows or people  -->
                 <button id="previousButton" aria-label="previous page button" class="bg-blue-800 w-[100px] text-white mb-4 ml-4 px-2 py-1 text-sm rounded hover:bg-blue-900 float-left">
                     <-- Previous
                 </button>
@@ -76,6 +86,7 @@
 
             </div>
         </div>
+    <!-- used connecting the webpage to the javascript for functionality -->
     <script src="./js/index.js"></script>
     </body>
 </html>
