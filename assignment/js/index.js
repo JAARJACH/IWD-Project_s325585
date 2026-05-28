@@ -194,11 +194,11 @@ function showDetails(showId){
         currentShowID = show.id;
         showName = show.name;
         const ShowElement = `
-        <img class="w-full rounded mb-4 row-start-1"
+        <img class="w-full rounded mb-4 col-span-1"
             src="${show.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text=' + show.name}" 
             alt="${show.name}">
         </img>
-        <div class="ml-4 md:col-span-2 row-start-2 col-span-2 md:row-end-1">
+        <div class="ml-4 col-span-2 ">
             <h2><strong>${show.name}</strong></h2>
             <p>Rating: ${show.rating?.average || "Unknown"}</p>
             <p>Genres: ${show?.genres || "Unknown"}</p>
@@ -212,8 +212,7 @@ function showDetails(showId){
             </a>
         </div>
         
-        <h2 class="float-left col-span-2 md:col-span-3 mb-2">Seasons:</h2>
-        <br>
+        <h2 class="col-span-1 md:col-span-3 mb-2">Seasons:</h2>
         `;
         detailsList.insertAdjacentHTML('beforeend', ShowElement);
     })
@@ -327,8 +326,7 @@ function seasonDetails(seasonID){
             <br>
         </div>
         
-        <h2 class="float-left col-span-5">Epsiodes:</h2>
-        <br>
+        <h2 class="float-left col-span-2 md:col-span-3 mb-2">Epsiodes:</h2>
         `;
         detailsList.insertAdjacentHTML('beforeend', seasonElement);
     })
