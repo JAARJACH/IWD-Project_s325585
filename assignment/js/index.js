@@ -32,6 +32,8 @@ function searchShows(event){
         displayed underneith the image
     */
     event.preventDefault();
+    // makes sure that all content can be seen 
+    resultList.style.display = "";
     wizardNav.innerHTML = "";
     // takes the input inside the search bar to be used for the URL
     const keyword = document.querySelector('#keywords').value;
@@ -72,40 +74,40 @@ function searchShows(event){
             </div>`;
             resultList.insertAdjacentHTML('beforeend', errorElement);
         }
+        // does the same exact thing just for the people(cast/crew members)
+        const url = 'https://api.tvmaze.com/search/people?q=' + keyword;
+        fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach((item) => {
+                const person = item.person;
+                const actorElement = `
+                <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
+                    <img 
+                        src="${person.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text='+ person.name }" 
+                        alt="${person.name}"
+                        class="w-full rounded mb-4"
+                    >
+                    <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
+                </button>`;
+                resultList.insertAdjacentHTML('beforeend', actorElement);
+            });
+            if(data === null || data.length == 0 ){
+                const errorElement = `
+                    <p class="text-gray-600 mb-3 break-words">Sorry no actors were found</p>
+                </div>`;
+                resultList.insertAdjacentHTML('beforeend', errorElement);
+            }
+        })
+        .catch((error) => {
+            return;
+        });
     })
     // if any error occurs the program is terminated and stop the error from happening 
     .catch((error) => {
         return;
     });
     
-    // does the same exact thing just for the people(cast/crew members)
-    const url = 'https://api.tvmaze.com/search/people?q=' + keyword;
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        data.forEach((item) => {
-            const person = item.person;
-            const actorElement = `
-            <button class="bg-white rounded shadow border-2 p-4 mb-4" onclick="actorDetails(${person.id})">
-                <img 
-                    src="${person.image?.medium ?? 'https://www.dummyimage.com/400x600/919191/000000.jpg&text='+ person.name }" 
-                    alt="${person.name}"
-                    class="w-full rounded mb-4"
-                >
-                <h5 class="text-lg font-semibold mb-2 break-words">${person.name}</h5>
-            </button>`;
-            resultList.insertAdjacentHTML('beforeend', actorElement);
-        });
-        if(data === null || data.length == 0 ){
-            const errorElement = `
-                <p class="text-gray-600 mb-3 break-words">Sorry no actors were found</p>
-            </div>`;
-            resultList.insertAdjacentHTML('beforeend', errorElement);
-        }
-    })
-    .catch((error) => {
-        return;
-    });
     // makes the search bar empty for the next use of it
     document.querySelector('#keywords').value = "";
 }
