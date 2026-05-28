@@ -25,7 +25,7 @@ let currentActorPage = 0;
 let currentWepPage = "home";
 
 
-function searchShows(event){
+function searchShows(){
     /*  used to search through shows and people and display them based 
         on if they are a show which just shows an image of the tv show 
         and for the people they get an image of them and their name 
