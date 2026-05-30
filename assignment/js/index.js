@@ -32,16 +32,12 @@ function searchShows(event){
         displayed underneith the image
     */
     event.preventDefault();
-    // makes sure that all content can be seen 
-    resultList.style.display = "";
     // takes the input inside the search bar to be used for the URL
     const keyword = document.querySelector('#keywords').value;
     // if the search is empty the function ends here to not wait resorces
     if(keyword.trim() == ""){
         return;
     }
-    // makes sure that the wizard only disappears if the search bar is not empty
-    wizardNav.innerHTML = "";
     // the URL for the data to be fetched
     const showUrl = 'https://api.tvmaze.com/search/shows?q=' + keyword;
     // cleans the webpage of any tv shows or people  
@@ -53,6 +49,10 @@ function searchShows(event){
     fetch(showUrl)
     .then((response) => response.json())
     .then((data) => {
+        // makes sure that all content can be seen 
+        resultList.style.display = "";
+        // makes sure that the wizard only disappears if the search bar is not empty
+        wizardNav.innerHTML = "";
         data.forEach((item) => {
             // for each object found it creats a button that will lead to the shows details
             const show = item.show;
